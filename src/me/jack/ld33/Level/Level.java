@@ -1,5 +1,6 @@
 package me.jack.ld33.Level;
 
+import me.jack.ld33.Entity.EntityPlayer;
 import me.jack.ld33.Level.Tile.Tile;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.tiled.TiledMap;
@@ -8,6 +9,7 @@ import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -16,26 +18,41 @@ import java.util.UUID;
 public class Level implements TileBasedMap {
 
 
-    public static final int TILESIZE = 32;
+    public static final int TILESIZE = 64
+            ;
     private final int width;
     private final int height;
 
     public int[][] levelTiles = new int[500][500];
 
 
-    public Camera camera = new Camera(1000, 1000, 32, 800, 600);
+    public Camera camera = new Camera(1000, 1000, 64, 800, 600);
 
+    EntityPlayer player;
 
     public Level(int width, int height, int[][] tiles) {
         this.levelTiles = tiles;
         this.width = width;
         this.height = height;
-        camera.calculate(30 * TILESIZE, 30 * TILESIZE);
+      //  camera.calculate(30 * TILESIZE, 30 * TILESIZE);
     }
 
+    public void postGeneration(){
+        Random r = new Random();
+        boolean found = false;
+        int x = -1,y=-1;
+        while(!found){
+             x = r.nextInt(width);
+             y = r.nextInt(height);
+            if(getTileAt(x,y) == 1){
+                found = true;
+            }
+        }
+        player = new EntityPlayer(x*TILESIZE,y*TILESIZE);
+    }
 
     public void render(Graphics g) {
-         g.scale(0.25f,0.25f);
+        // g.scale(2f,2f);
         g.translate(-camera.x, -camera.y);
         for (int x = 0; x != levelTiles.length; x++) {
             for (int y = 0; y != levelTiles[0].length; y++) {
@@ -48,10 +65,14 @@ public class Level implements TileBasedMap {
             }
         }
 
-
+        player.render(g);
         g.resetTransform();
     }
 
+    public void update(float delta){
+        camera.calculate(player.getX(),player.getY());
+        player.update(this,delta);
+    }
     private boolean onScreen(int x, int y) {
 
 

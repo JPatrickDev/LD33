@@ -31,12 +31,8 @@ public class Tile {
 
     public static void initTiles() throws SlickException {
         tileSpriteSheet = new SpriteSheet("res/tileset.png", 16, 16);
-
         new StoneFloor();
         new StoneWall();
-        new DoorTile();
-        new EmptyTile();
-        new CorridorTestTile();
     }
 
 
@@ -50,7 +46,7 @@ public class Tile {
         this.y = y;
         this.name = name;
         this.solid = solid;
-        this.tileImage = tileSpriteSheet.getSubImage(x, y).getScaledCopy(2f);
+        this.tileImage = tileSpriteSheet.getSubImage(x, y).getScaledCopy(4f);
         tileLookup.put(id, this);
     }
 

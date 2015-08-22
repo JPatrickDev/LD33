@@ -27,6 +27,7 @@ public class LevelGenerator {
 
         placeRooms(level);
 
+        level.postGeneration();
         return level;
 
     }
@@ -35,8 +36,8 @@ public class LevelGenerator {
    public static void placeRooms(Level level){
        ArrayList<Room> rooms = new ArrayList<Room>();
        for(int i = 0;i!= 10;i++){
-           int width = 5 + r.nextInt(10 - 5 + 1);
-           int height = 5 + r.nextInt(10-5+1);
+           int width = 5 + r.nextInt(8 - 4 + 1);
+           int height = 5 + r.nextInt(8-4+1);
            int x = r.nextInt(level.getWidth() - width -1) + 1;
            int y = r.nextInt(level.getHeight() -height - 1) + 1;
            Room room = new Room(x,y,width,height);
@@ -100,8 +101,8 @@ public class LevelGenerator {
         while (true) {
 
 
-            int w = 100;
-            int h = 100;
+            int w = 50;
+            int h = 50;
 
             BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
 

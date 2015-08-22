@@ -21,7 +21,7 @@ public class InGameState extends BasicGameState {
 
 
      //   this.level = new Level();
-        level = LevelGenerator.generateLevel(100,100);
+        level = LevelGenerator.generateLevel(50,50);
     }
 
     @Override
@@ -32,6 +32,7 @@ public class InGameState extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+        level.update(i);
     }
 
     @Override

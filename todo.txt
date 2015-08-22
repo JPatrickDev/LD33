@@ -1,10 +1,10 @@
 - Level
 
-    - Randomly generated rooms
-        - Corridors connecting the rooms
+    - Randomly generated rooms/
+        - Corridors connecting the rooms/
 
 Player
 
-    - Player entity who can walk around the level
-        - Camera
-        - Collision detection.
+    - Player entity who can walk around the level/
+        - Camera/
+        - Collision detection
