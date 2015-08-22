@@ -1,5 +1,6 @@
 package me.jack.ld33.Level;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
@@ -9,8 +10,8 @@ import java.util.UUID;
 public class Room extends Space {
 
 
-    public Room(String id, int width, int height, int startX, int startY) {
-        this.id = id;
+
+    public Room(int width, int height, int startX, int startY) {
         this.width = width;
         this.height = height;
         this.tiles = new int[width][height];
@@ -66,7 +67,9 @@ public class Room extends Space {
                             topWallHasDoor = true;
                             generationSuccessful = true;
                             int randX = random.nextInt(getWidth() - 1) + 1;
-                            setTileAt(randX, 0, 3);
+                            setTileAt(randX, 0, 1);
+                            Door door = new Door(randX,0,Corridor.NORTH,Door.CORRIDOR);
+                            doors.add(door);
                         }
                         break;
                     case 1:
@@ -74,7 +77,9 @@ public class Room extends Space {
                             rightWallHasDoor = true;
                             generationSuccessful = true;
                             int randY = random.nextInt(getHeight() - 1) + 1;
-                            setTileAt(getWidth() - 1, randY, 3);
+                            setTileAt(getWidth() - 1, randY, 1);
+                            Door door = new Door(getWidth() - 1, randY,Corridor.EAST,Door.CORRIDOR);
+                            doors.add(door);
                         }
                         break;
                     case 2:
@@ -82,7 +87,9 @@ public class Room extends Space {
                             bottomWallHasDoor = true;
                             generationSuccessful = true;
                             int randX = random.nextInt(getWidth() - 1) + 1;
-                            setTileAt(randX, getHeight() - 1, 3);
+                            setTileAt(randX, getHeight() - 1, 1);
+                            Door door = new Door(randX, getHeight() - 1,Corridor.SOUTH,Door.CORRIDOR);
+                            doors.add(door);
                         }
                         break;
                     case 3:
@@ -90,7 +97,9 @@ public class Room extends Space {
                             leftWallHasDoor = true;
                             generationSuccessful = true;
                             int randY = random.nextInt(getHeight() - 1) + 1;
-                            setTileAt(0, randY, 3);
+                            setTileAt(0, randY, 1);
+                            Door door = new Door(0, randY,Corridor.WEST,Door.CORRIDOR);
+                            doors.add(door);
                         }
                         break;
                 }

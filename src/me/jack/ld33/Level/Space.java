@@ -1,6 +1,7 @@
 package me.jack.ld33.Level;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -12,8 +13,7 @@ public class Space {
     protected int[][] tiles = null;
     protected int width, height, x, y;
     protected String id;
-
-    protected HashMap<Point,String> doors = new HashMap<Point, String>();
+    public ArrayList<Door> doors = new ArrayList<Door>();
 
 
     public int[][] getTiles() {

@@ -24,41 +24,50 @@ public class Corridor extends Space{
     public Corridor(int facing,int x,int y){
         this.facing = facing;
         this.id = id;
-
+        int dX = 0, dY = 0;
         switch (facing) {
             case NORTH:
                 width = 5;
-                height = Room.random.nextInt(6) + 4;
+                height = 8;
                 this.x = x - 2;
-                this.y = y - height;
+                this.y = y - (height-1);
+                dX = 2;
+                dY =height-1;
+                doors.add(new Door(2,0,NORTH,Door.ROOM));
                 break;
             case EAST:
                 height = 5;
                 width = 8;
                 this.x = x;
                 this.y = y-2;
-                doors.put(new Point(0,2),"");
-                doors.put(new Point(width-1,2),"");
+                dX = 0;
+                dY = 2;
+                doors.add(new Door(width-1,2,EAST,Door.ROOM));
                 break;
             case SOUTH:
                 width = 5;
                 height = 8;
                 this.x = x-2;
                 this.y = y;
-                doors.put(new Point(2,0),"");
-                doors.put(new Point(2,height-1),"");
+                dX = 2;
+                dY = 0;
+                doors.add(new Door(2,height-1,SOUTH,Door.ROOM));
                 break;
 
             case WEST:
                 height = 5;
                 width = 8;
-                this.x = x-width;
+                this.x = x-(width-1);
                 this.y = y - 2;
+                dY = 2;
+                dX = width-1;
+                doors.add(new Door(0,2,WEST,Door.ROOM));
                 break;
         }
 
         System.out.println(width + ":" + height);
         tiles = new int[width][height];
+
         for (int xx = 0; xx != getWidth(); xx++) {
             for (int yy = 0; yy != getHeight(); yy++) {
                 if (yy != 0 && xx != 0 && yy != getHeight() - 1 && xx != getWidth() - 1)
@@ -68,15 +77,9 @@ public class Corridor extends Space{
             }
         }
 
-        for(Point point : doors.keySet()){
-            setTileAt(point.x,point.y,3);
-        }
-
-
+        setTileAt(dX,dY,1);
     }
 
-    public void init() {
-    }
     public int[][] getTiles() {
         return tiles;
     }

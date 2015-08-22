@@ -25,7 +25,7 @@ public class Tile {
 
 
 
-    private static SpriteSheet tileSpriteSheet = null;
+    public static SpriteSheet tileSpriteSheet = null;
     private static HashMap<Integer, Tile> tileLookup = new HashMap<Integer, Tile>();
 
 

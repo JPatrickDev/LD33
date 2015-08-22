@@ -39,8 +39,8 @@ public class InGameState extends BasicGameState {
     public void mouseClicked(int button, int x, int y, int clickCount) {
         super.mouseClicked(button, x, y, clickCount);
 
-        int tX = (x)/32;
-        int tY = (y)/32;
+        int tX = (x + level.camera.x)/32;
+        int tY = (y + level.camera.y)/32;
       //  if(tX < 0 || tX >=10 || tY < 0 || tY >= 10)return;
         //((Room)level.spaceArray.get(Level.firstUUID)).doorSteppedOn(tX,tY,level);
        level.doorClicked(tX,tY);
