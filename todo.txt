@@ -1,13 +1,10 @@
 - Level
-    - Rendering a room in the level class/
-    - Randomly placing doors in the wall/
-    - Corridors between rooms
 
-Doors
-    - Need to know which way a door is facing
-        - Make doors a separate object that sit ontop of a floor tile?
+    - Randomly generated rooms
+        - Corridors connecting the rooms
 
+Player
 
-Bugs
-
-    - Will break if player enters a corridor but then decides to not continue through the other door
+    - Player entity who can walk around the level
+        - Camera
+        - Collision detection.

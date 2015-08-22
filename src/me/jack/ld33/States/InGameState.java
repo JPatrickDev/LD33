@@ -1,13 +1,11 @@
 package me.jack.ld33.States;
 
 import me.jack.ld33.Level.Level;
-import me.jack.ld33.Level.Room;
+import me.jack.ld33.Level.LevelGenerator;
 import me.jack.ld33.Level.Tile.Tile;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
-import java.util.UUID;
 
 /**
  * Created by Jack on 22/08/2015.
@@ -22,7 +20,8 @@ public class InGameState extends BasicGameState {
         Tile.initTiles();
 
 
-        this.level = new Level();
+     //   this.level = new Level();
+        level = LevelGenerator.generateLevel(100,100);
     }
 
     @Override
@@ -43,7 +42,6 @@ public class InGameState extends BasicGameState {
         int tY = (y + level.camera.y)/32;
       //  if(tX < 0 || tX >=10 || tY < 0 || tY >= 10)return;
         //((Room)level.spaceArray.get(Level.firstUUID)).doorSteppedOn(tX,tY,level);
-       level.doorClicked(tX,tY);
     }
 
     @Override
