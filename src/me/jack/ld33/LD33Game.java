@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Created by Jack on 22/08/2015.
  */
-public class LD33Game extends StateBasedGame{
+public class LD33Game extends StateBasedGame {
 
     public LD33Game(String name) {
         super(name);

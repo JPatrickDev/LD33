@@ -1,5 +1,8 @@
 package me.jack.ld33.States;
 
+import me.jack.ld33.GUI.GUI;
+import me.jack.ld33.Item.Item;
+import me.jack.ld33.Item.Weapon;
 import me.jack.ld33.Level.Level;
 import me.jack.ld33.Level.LevelGenerator;
 import me.jack.ld33.Level.Tile.Tile;
@@ -18,6 +21,7 @@ public class InGameState extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         Tile.initTiles();
+        Weapon.init();
 
 
         //   this.level = new Level();
@@ -27,12 +31,17 @@ public class InGameState extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         level.render(graphics);
+        GUI.renderHUD(graphics,level);
     }
 
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         level.update(i);
+        if(level.getPlayer() != null){
+            level.getPlayer().angle = (float) -(Math.atan2(level.getPlayer().getX() - (gameContainer.getInput().getMouseX()+level.camera.x), level.getPlayer().getY() - (gameContainer.getInput().getMouseY() + level.camera.y)) * 180 / Math.PI);
+        }
+
     }
 
     @Override

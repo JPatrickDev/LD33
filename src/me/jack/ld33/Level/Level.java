@@ -3,6 +3,7 @@ package me.jack.ld33.Level;
 import me.jack.ld33.Entity.Entity;
 import me.jack.ld33.Entity.MobBat;
 import me.jack.ld33.Entity.MobPlayer;
+import me.jack.ld33.Item.Melee.DaggerWeapon;
 import me.jack.ld33.Level.Tile.Tile;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Shape;
@@ -56,7 +57,7 @@ public class Level implements TileBasedMap {
             }
         }
         player = new MobPlayer(x * TILESIZE, y * TILESIZE);
-
+        player.getWeapons().setSlot(0, new DaggerWeapon());
 
         for (int xx = 0; xx != width; xx++) {
             for (int yy = 0; yy != height; yy++) {
@@ -64,7 +65,7 @@ public class Level implements TileBasedMap {
                 if (tile.isSolid()) {
                     hitboxes.add(new Rectangle(xx * TILESIZE, yy * TILESIZE, TILESIZE, TILESIZE));
                 }else{
-                    if(getTileAt(xx,yy) == 1){
+                    if(getTileAt(xx,yy) == 1 && r.nextInt(100) == 0){
                         for(int i = 0;i!= 5;i++){
                             spawnBat(xx*TILESIZE,yy * TILESIZE);
                         }

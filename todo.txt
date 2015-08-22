@@ -24,3 +24,9 @@ Combat
     - Equipped Slot
     - Inventory
         - Keyboard shortcuts to swap between weapons quickly?
+        - Can only carry a limited number of weapons
+            - Can drop and pick weapons back up
+                - Any weapons you drop can be picked up by a aggressive human?
+        - Clicking on a weapon slot brings up info about the weapon
+            - Stats
+            - Description
