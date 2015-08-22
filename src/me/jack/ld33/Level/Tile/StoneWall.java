@@ -6,6 +6,6 @@ package me.jack.ld33.Level.Tile;
 public class StoneWall extends Tile{
 
     public StoneWall() {
-        super(1, 0, "StoneWall", false,2);
+        super(1, 0, "StoneWall", true,2);
     }
 }

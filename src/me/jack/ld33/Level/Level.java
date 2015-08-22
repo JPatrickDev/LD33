@@ -7,6 +7,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -25,6 +26,7 @@ public class Level implements TileBasedMap {
 
     public int[][] levelTiles = new int[500][500];
 
+    public ArrayList<Rectangle> hitboxes = new ArrayList<Rectangle>();
 
     public Camera camera = new Camera(1000, 1000, 64, 800, 600);
 
@@ -49,6 +51,16 @@ public class Level implements TileBasedMap {
             }
         }
         player = new EntityPlayer(x*TILESIZE,y*TILESIZE);
+
+
+        for(int xx = 0;xx!= width;xx++){
+            for(int yy = 0; yy != height;yy++){
+                Tile tile = Tile.getTile(getTileAt(xx,yy));
+                if(tile.isSolid()){
+                    hitboxes.add(new Rectangle(xx*TILESIZE,yy * TILESIZE,TILESIZE,TILESIZE));
+                }
+            }
+        }
     }
 
     public void render(Graphics g) {
@@ -70,8 +82,8 @@ public class Level implements TileBasedMap {
     }
 
     public void update(float delta){
-        camera.calculate(player.getX(),player.getY());
-        player.update(this,delta);
+        camera.calculate(player.getX(), player.getY());
+        player.update(this, delta);
     }
     private boolean onScreen(int x, int y) {
 
@@ -112,6 +124,15 @@ public class Level implements TileBasedMap {
         }catch (Exception e){
 
         }
+    }
+
+
+    public boolean canMove(int newX,int newY,int width,int height){
+        Rectangle rekt = new Rectangle(newX,newY,width,height);
+        for(Rectangle rectangle: hitboxes){
+            if(rekt.intersects(rectangle))return false;
+        }
+        return true;
     }
 
 

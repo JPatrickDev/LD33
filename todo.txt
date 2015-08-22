@@ -7,4 +7,10 @@ Player
 
     - Player entity who can walk around the level/
         - Camera/
-        - Collision detection
+        - Collision detection/
+
+
+NPC
+    - Bats?
+    - Rats?
+    - people

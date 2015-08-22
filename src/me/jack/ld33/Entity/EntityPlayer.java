@@ -16,24 +16,26 @@ public class EntityPlayer extends Entity {
     }
 
 
-
     @Override
     public void update(Level level, float delta) {
 
-            if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+            if (level.canMove(getX(), getY() - 8, getWidth(), getHeight()))
                 addY(-8);
-            }
-            if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+            if (level.canMove(getX(), getY() + 8, getWidth(), getHeight()))
                 addY(8);
-            }
-            if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-             addX(-8);
-            }
-            if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-               addX(8);
-            }
 
-
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+            if (level.canMove(getX() - 8, getY(), getWidth(), getHeight()))
+                addX(-8);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
+            if (level.canMove(getX() + 8, getY(), getWidth(), getHeight()))
+                addX(8);
+        }
 
 
     }
