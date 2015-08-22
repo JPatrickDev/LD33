@@ -1,0 +1,20 @@
+Theme: You are the monster
+
+
+Re-make villainous?
+    - Random world gen?
+    - Better AI
+    - Better graphics
+    - More items
+
+
+Rouge-like/Dungeon-crawler where you are have to kill everything living in the dungeon?
+    - Random gen of the dungeon
+    - Innocent "towns" inside the dungeon?
+    - Lots of blood splat effects
+    - Could be a human who's gone insane?
+        - Backstory in intro
+    - Some kills have drops that can improve your killing ability
+        - Food to regain health
+        - Humans can drop tools that you could use as weapons or to improve your current weapons
+    - Different levels inside the dungeon with different look and feels (Stairs down?)
