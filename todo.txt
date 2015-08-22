@@ -1,3 +1,9 @@
 - Level
     - Rendering a room in the level class/
-    - Randomly placing doors in the wall
+    - Randomly placing doors in the wall/
+    - Corridors between rooms
+
+
+Bugs
+
+    - Will break if player enters a corridor but then decides to not continue through the other door

@@ -35,6 +35,8 @@ public class Tile {
         new StoneFloor();
         new StoneWall();
         new DoorTile();
+        new EmptyTile();
+        new CorridorTestTile();
     }
 
 
