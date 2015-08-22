@@ -1,19 +1,20 @@
 package me.jack.ld33.Level;
 
 import me.jack.ld33.Entity.Entity;
-import me.jack.ld33.Entity.EntityBat;
-import me.jack.ld33.Entity.EntityPlayer;
+import me.jack.ld33.Entity.MobBat;
+import me.jack.ld33.Entity.MobPlayer;
 import me.jack.ld33.Level.Tile.Tile;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.tiled.TiledMap;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
+import uk.co.jdpatrick.JEngine.Particle.ParticleSystem;
 
-import java.awt.*;
+
+import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
-import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Jack on 22/08/2015.
@@ -21,6 +22,7 @@ import java.util.UUID;
 public class Level implements TileBasedMap {
 
 
+    public ParticleSystem particleSystem = new ParticleSystem(this);
     public static final int TILESIZE = 64;
     private final int width;
     private final int height;
@@ -28,38 +30,45 @@ public class Level implements TileBasedMap {
     public int[][] levelTiles = new int[500][500];
 
     public ArrayList<Rectangle> hitboxes = new ArrayList<Rectangle>();
-    public ArrayList<Entity> entities = new ArrayList<Entity>();
+    public CopyOnWriteArrayList<Entity> entities = new CopyOnWriteArrayList<Entity>();
 
     public Camera camera = new Camera(1000, 1000, 64, 800, 600);
 
-    EntityPlayer player;
+    MobPlayer player;
+
 
     public Level(int width, int height, int[][] tiles) {
         this.levelTiles = tiles;
         this.width = width;
         this.height = height;
-      //  camera.calculate(30 * TILESIZE, 30 * TILESIZE);
+        //  camera.calculate(30 * TILESIZE, 30 * TILESIZE);
     }
 
-    public void postGeneration(){
+    public void postGeneration() {
         Random r = new Random();
         boolean found = false;
-        int x = -1,y=-1;
-        while(!found){
-             x = r.nextInt(width);
-             y = r.nextInt(height);
-            if(getTileAt(x,y) == 1){
+        int x = -1, y = -1;
+        while (!found) {
+            x = r.nextInt(width);
+            y = r.nextInt(height);
+            if (getTileAt(x, y) == 1) {
                 found = true;
             }
         }
-        player = new EntityPlayer(x*TILESIZE,y*TILESIZE);
+        player = new MobPlayer(x * TILESIZE, y * TILESIZE);
 
 
-        for(int xx = 0;xx!= width;xx++){
-            for(int yy = 0; yy != height;yy++){
-                Tile tile = Tile.getTile(getTileAt(xx,yy));
-                if(tile.isSolid()){
-                    hitboxes.add(new Rectangle(xx*TILESIZE,yy * TILESIZE,TILESIZE,TILESIZE));
+        for (int xx = 0; xx != width; xx++) {
+            for (int yy = 0; yy != height; yy++) {
+                Tile tile = Tile.getTile(getTileAt(xx, yy));
+                if (tile.isSolid()) {
+                    hitboxes.add(new Rectangle(xx * TILESIZE, yy * TILESIZE, TILESIZE, TILESIZE));
+                }else{
+                    if(getTileAt(xx,yy) == 1){
+                        for(int i = 0;i!= 5;i++){
+                            spawnBat(xx*TILESIZE,yy * TILESIZE);
+                        }
+                    }
                 }
             }
         }
@@ -74,25 +83,30 @@ public class Level implements TileBasedMap {
                 Tile tile = Tile.getTile(i);
                 //      if((x*TILESIZE) <0 || (x*TILESIZE) > 832)continue;
                 // if((y*TILESIZE) <0 || (y*TILESIZE) > 632) continue;
-               // if (onScreen(x * TILESIZE, y * TILESIZE))
-                    tile.render((x) * TILESIZE, (y) * TILESIZE, g);
+                // if (onScreen(x * TILESIZE, y * TILESIZE))
+                tile.render((x) * TILESIZE, (y) * TILESIZE, g);
             }
         }
 
-        player.render(g);
-        for(Entity e : entities){
+        particleSystem.render(g,0,0);
+        for (Entity e : entities) {
             e.render(g);
         }
+
+        player.render(g);
         g.resetTransform();
     }
 
-    public void update(float delta){
+    public void update(float delta) {
         camera.calculate(player.getX(), player.getY());
-        for(Entity e : entities){
-            e.update(this,delta);
+        for (Entity e : entities) {
+            e.update(this, delta);
         }
         player.update(this, delta);
+
+        particleSystem.update();
     }
+
     private boolean onScreen(int x, int y) {
 
 
@@ -120,7 +134,7 @@ public class Level implements TileBasedMap {
     public int getTileAt(int x, int y) {
         try {
             return levelTiles[x][y];
-        }catch (Exception e){
+        } catch (Exception e) {
             return -1;
         }
     }
@@ -128,22 +142,31 @@ public class Level implements TileBasedMap {
     public void setTileAt(int x, int y, int i) {
 
         try {
-        this.levelTiles[x][y] = i;
-        }catch (Exception e){
+            this.levelTiles[x][y] = i;
+        } catch (Exception e) {
 
         }
     }
 
 
-    public boolean canMove(int newX,int newY,int width,int height){
-        Rectangle rekt = new Rectangle(newX,newY,width,height);
-        for(Rectangle rectangle: hitboxes){
-            if(rekt.intersects(rectangle))return false;
+    public boolean canMove(int newX, int newY, int width, int height) {
+        Rectangle rekt = new Rectangle(newX, newY, width, height);
+        for (Rectangle rectangle : hitboxes) {
+            if (rekt.intersects(rectangle)) return false;
         }
         return true;
     }
 
-
+    public ArrayList<Entity> entitiesInShape(Shape shape) {
+        ArrayList<Entity> foundEntities = new ArrayList<Entity>();
+        for (Entity e : entities) {
+            org.newdawn.slick.geom.Rectangle rectangle = new org.newdawn.slick.geom.Rectangle(e.getX(), e.getY(), e.getWidth(), e.getHeight());
+            if (shape.intersects(rectangle)) {
+                foundEntities.add(e);
+            }
+        }
+        return foundEntities;
+    }
 
 
     @Override
@@ -163,13 +186,13 @@ public class Level implements TileBasedMap {
 
     @Override
     public boolean blocked(PathFindingContext pathFindingContext, int i, int i1) {
-      return false;
+        return false;
     }
 
     @Override
     public float getCost(PathFindingContext pathFindingContext, int i, int i1) {
         int defaultCost = 20;
-        if(i == pathFindingContext.getSourceX() || i1 == pathFindingContext.getSourceY()){
+        if (i == pathFindingContext.getSourceX() || i1 == pathFindingContext.getSourceY()) {
             return 0;
         }
         return defaultCost;
@@ -183,7 +206,11 @@ public class Level implements TileBasedMap {
         return width;
     }
 
-    public void spawnBat() {
-            entities.add(new EntityBat(player.getX(),player.getY()));
+    public void spawnBat(int x,int y) {
+        entities.add(new MobBat(x,y));
+    }
+
+    public MobPlayer getPlayer() {
+        return player;
     }
 }

@@ -1,5 +1,6 @@
 package uk.co.jdpatrick.JEngine.Particle;
 
+import me.jack.ld33.Level.Level;
 import org.newdawn.slick.Graphics;
 
 import java.util.ArrayList;
@@ -11,6 +12,13 @@ import java.util.Iterator;
  * @author Jack Patrick
  */
 public class ParticleSystem {
+
+
+    public Level level;
+
+    public ParticleSystem(Level level) {
+        this.level = level;
+    }
 
     /**
      * ArrayList of all the Particles belonging to the ParticleSystem

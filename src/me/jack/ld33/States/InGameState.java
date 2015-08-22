@@ -20,8 +20,8 @@ public class InGameState extends BasicGameState {
         Tile.initTiles();
 
 
-     //   this.level = new Level();
-        level = LevelGenerator.generateLevel(50,50,false);
+        //   this.level = new Level();
+        level = LevelGenerator.generateLevel(50, 50, false);
     }
 
     @Override
@@ -38,7 +38,13 @@ public class InGameState extends BasicGameState {
     @Override
     public void mouseClicked(int button, int x, int y, int clickCount) {
         super.mouseClicked(button, x, y, clickCount);
-        level.spawnBat();
+        if (button == Input.MOUSE_MIDDLE_BUTTON){
+            for(int i = 0;i!= 10;i++){
+                //level.spawnBat(000);
+            }
+        }
+        else
+            level.getPlayer().attack(level);
     }
 
     @Override

@@ -11,6 +11,16 @@ Player
 
 
 NPC
-    - Bats?
+    - Bats/
     - Rats?
-    - people
+    - People
+        - Randomly generate different clothes colours for each person
+        - Personalities?
+            - Some humans will attempt to fight back, others will run away?
+
+
+Combat
+    - Weapon items
+    - Equipped Slot
+    - Inventory
+        - Keyboard shortcuts to swap between weapons quickly?

@@ -1,6 +1,7 @@
 package me.jack.ld33.Entity;
 
 import me.jack.ld33.Level.Level;
+import me.jack.ld33.Particles.SmallBloodParticle;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import uk.co.jdpatrick.JEngine.Image.ImageUtil;
@@ -10,14 +11,15 @@ import java.util.Random;
 /**
  * Created by Jack on 22/08/2015.
  */
-public class EntityBat extends Entity {
+public class MobBat extends Mob {
 
     float xVel,yVel;
 
     public static final Random random = new Random();
     public static Image batSprite = null;
-    public EntityBat(int x, int y) {
+    public MobBat(int x, int y) {
         super(x, y, 24, 24);
+        this.health = 10f;
         if(batSprite == null){
             batSprite = ImageUtil.loadImage("res/bat.png");
         }
@@ -33,6 +35,12 @@ public class EntityBat extends Entity {
 
     @Override
     public void update(Level level, float delta) {
+        if(health <= 0){
+            level.entities.remove(this);
+            for(int i = 0;i!= 25;i++)
+            level.particleSystem.addParticle(new SmallBloodParticle(getX(),getY()));
+            return;
+        }
         if(level.canMove((int)(getX()+xVel),(int)(getY()+yVel),getWidth(),getHeight())) {
             addX((int) xVel);
             addY((int) yVel);
