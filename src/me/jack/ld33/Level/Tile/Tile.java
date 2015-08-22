@@ -30,9 +30,17 @@ public class Tile {
 
 
     public static void initTiles() throws SlickException {
-        tileSpriteSheet = new SpriteSheet("res/tileset.png", 16, 16);
+        tileSpriteSheet = new SpriteSheet("res/floor_1_tileset.png", 16, 16);
         new StoneFloor();
         new StoneWall();
+        new StoneWallLeft();
+        new StoneWallTop();
+        new StoneWallRight();
+        new StoneWallBottom();
+        new StoneCornerBottomRight();
+        new StoneCornerBottomLeft();
+        new StoneCornerTopLeft();
+        new StoneCornerTopRight();
     }
 
 

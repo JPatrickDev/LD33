@@ -1,5 +1,7 @@
 package me.jack.ld33.Level;
 
+import me.jack.ld33.Entity.Entity;
+import me.jack.ld33.Entity.EntityBat;
 import me.jack.ld33.Entity.EntityPlayer;
 import me.jack.ld33.Level.Tile.Tile;
 import org.newdawn.slick.Graphics;
@@ -19,14 +21,14 @@ import java.util.UUID;
 public class Level implements TileBasedMap {
 
 
-    public static final int TILESIZE = 64
-            ;
+    public static final int TILESIZE = 64;
     private final int width;
     private final int height;
 
     public int[][] levelTiles = new int[500][500];
 
     public ArrayList<Rectangle> hitboxes = new ArrayList<Rectangle>();
+    public ArrayList<Entity> entities = new ArrayList<Entity>();
 
     public Camera camera = new Camera(1000, 1000, 64, 800, 600);
 
@@ -78,11 +80,17 @@ public class Level implements TileBasedMap {
         }
 
         player.render(g);
+        for(Entity e : entities){
+            e.render(g);
+        }
         g.resetTransform();
     }
 
     public void update(float delta){
         camera.calculate(player.getX(), player.getY());
+        for(Entity e : entities){
+            e.update(this,delta);
+        }
         player.update(this, delta);
     }
     private boolean onScreen(int x, int y) {
@@ -173,5 +181,9 @@ public class Level implements TileBasedMap {
 
     public int getWidth() {
         return width;
+    }
+
+    public void spawnBat() {
+            entities.add(new EntityBat(player.getX(),player.getY()));
     }
 }

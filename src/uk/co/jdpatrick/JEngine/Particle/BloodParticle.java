@@ -24,8 +24,8 @@ public class BloodParticle extends Particle {
         xx = x;
         yy = y;
 
-        xa = random.nextGaussian() * 1.5;
-        ya = random.nextGaussian() * 1.5;
+        xa = random.nextGaussian() * 0.5;
+        ya = random.nextGaussian() * 0.9;
 
         particle = new Rectangle((float) xx, (float) yy, 10, 10);
     }
