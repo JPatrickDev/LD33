@@ -44,7 +44,7 @@ Combat
         - Particle effect
 
 Items
-    - Chests in some rooms
+    - Chests in some rooms/
         - Chests will need an inventory and a GUI/
             - Contain coins, food, raw materials
                 - Rare weapons
@@ -56,6 +56,8 @@ Items
 
 Graphics
     - Art for humans
+        - Player looks slightly different to rest
+           - red eyes/
     - Better floor, wall tiles
     - finish the corners
     - Proper GUI
@@ -73,7 +75,7 @@ Sound
 
 Misc
     - Scoring system******
-    - Mutliple levels
+    - Multiple levels
         - Slightly different art for each (Darker as you get deeper/Lava?)
     - Speedrunning?
     - Reduce number of different Random objects
@@ -81,3 +83,4 @@ Misc
     - Checking if a tile = 1 is no longer enough to be sure it's an empty tile(Chests)
     - Slightly randomize the blood splat colours?
     - Cache the scaled item sprite when rendering chests GUI
+    - Lighting?

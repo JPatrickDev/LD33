@@ -98,7 +98,6 @@ public class MobPlayer extends Mob {
 
     @Override
     public void render(Graphics graphics) {
-        playerSprite.setRotation(angle);
         //   graphics.fill(attackRadius);
         graphics.drawImage(playerSprite, getX(), getY());
 
