@@ -5,9 +5,7 @@ import me.jack.ld33.Item.Melee.AxeWeapon;
 import me.jack.ld33.Item.Ranged.ProjectileType;
 import me.jack.ld33.Level.Level;
 import me.jack.ld33.Particles.SmallBloodParticle;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
 import org.newdawn.slick.util.pathfinding.Mover;
@@ -28,13 +26,22 @@ public class MobHuman extends Mob implements Mover {
 
     Human_Behaviour currentBehaviour = null;
 
-    public static Image humanSprite;
+    public Image humanSprite;
+    public static SpriteSheet humans = null;
 
     public MobHuman(int x, int y) {
         super(x, y, 32, 32);
-        if (humanSprite == null) {
-            humanSprite = ImageUtil.loadImage("res/human.png");
+        if(humans == null){
+            try {
+                humans = new SpriteSheet("res/human_selection.png",32,32);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+
         }
+        int xPos = random.nextInt(2);
+        int yPos = random.nextInt(2);
+        humanSprite = humans.getSprite(xPos,yPos);
         currentBehaviour = Human_Behaviour.randomBehaviour();
         currentBehaviour = Human_Behaviour.FLEEING;
         this.health = 20f;
@@ -45,6 +52,13 @@ public class MobHuman extends Mob implements Mover {
     Path patrolPath = null;
 
 
+
+    private Color randColour(){
+        int r = random.nextInt(255);
+        int g = random.nextInt(255);
+        int b = random.nextInt(255);
+        return new Color(r,g,b);
+    }
     int step = 1;
 
 
@@ -176,8 +190,9 @@ public class MobHuman extends Mob implements Mover {
         } else {
             step = 1;
             movingTo = null;
+            currentPath = null;
         }
-        if (random.nextInt(500) == 0 || step >= currentPath.getLength() - 1) {
+        if (random.nextInt(500) == 0) {
             movingTo = null;
             currentPath = null;
             step = 1;
@@ -199,14 +214,15 @@ public class MobHuman extends Mob implements Mover {
             graphics.setColor(Color.white);
         }
 
-        //if (currentPath != null)
-        //    for (int i = 0; i != currentPath.getLength(); i++) {
-        //       Path.Step step = currentPath.getStep(i);
-        //          graphics.fillRect(step.getX()*64,step.getY()*64,64,64);
-        //   }
+       /* if (currentPath != null)
+            for (int i = 0; i != currentPath.getLength(); i++) {
+               Path.Step step = currentPath.getStep(i);
+                 graphics.fillRect(step.getX()*64,step.getY()*64,64,64);
+          }
         if (movingTo != null)
             graphics.fillRect(movingTo.x, movingTo.y, 64, 64);
-     graphics.drawImage(humanSprite,getX(),getY());
+     */
+        graphics.drawImage(humanSprite,getX(),getY());
     }
 
 }

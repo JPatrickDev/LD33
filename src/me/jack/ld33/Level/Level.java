@@ -73,6 +73,7 @@ public class Level implements TileBasedMap {
         player.ammo.put(ProjectileType.SMALL_BULLET, 20);
         player.getWeapons().setSlot(3, new MachineGunWeapon());
         player.ammo.put(ProjectileType.BULLET, 200);
+        spawnHuman(player.getX(),player.getY());
 
 
 
