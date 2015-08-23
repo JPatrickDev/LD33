@@ -9,11 +9,11 @@ import org.newdawn.slick.Image;
 public class DaggerWeapon extends MeleeWeapon{
 
     public DaggerWeapon() {
-        super(weaponIcons.getSprite(0,0), weaponSprites.getSprite(0,0),"Dagger");
+        super(weaponIcons.getSprite(0, 0), weaponSprites.getSprite(0, 0), "Dagger");
         setAttackRadius(64f);
-        setCondition(100f);
-        setDamage(5f);
-        setMaxCondition(100f);
+        setCondition(10000000f);
+        setDamage(6f);
+        setMaxCondition(10000000f);
     }
 
 }

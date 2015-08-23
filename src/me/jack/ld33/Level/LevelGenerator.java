@@ -1,9 +1,12 @@
 package me.jack.ld33.Level;
 
 import me.jack.ld33.Entity.MobHuman;
+import me.jack.ld33.Item.Ammo;
 import me.jack.ld33.Item.Chest;
 import me.jack.ld33.Item.Melee.AxeWeapon;
 import me.jack.ld33.Item.Melee.DaggerWeapon;
+import me.jack.ld33.Item.Ranged.MachineGunWeapon;
+import me.jack.ld33.Item.Ranged.ProjectileType;
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
 import org.newdawn.slick.util.pathfinding.Mover;
 import org.newdawn.slick.util.pathfinding.Path;
@@ -80,16 +83,27 @@ public class LevelGenerator {
             }
         }
 
-        if (MobHuman.random.nextInt(2) == 0) {
+
             Chest chest = new Chest(new Point(room.getCenter().x,room.getCenter().y));
             if (!testing) {
-                chest.addItem(new AxeWeapon());
-                chest.addItem(new DaggerWeapon());
+                while(chest.isEmpty()) {
+                    Ammo ammo = new Ammo(ProjectileType.randomProjectile(), MobHuman.random.nextInt(20) + 10);
+                    if (MobHuman.random.nextInt(2) == 0) {
+                        chest.addItem(ammo);
+                    }
+
+                    if (MobHuman.random.nextInt(2) == 0) {
+                        chest.addItem(new AxeWeapon());
+                    }
+                    if (MobHuman.random.nextInt(2) == 0) {
+                        chest.addItem(new MachineGunWeapon());
+                    }
+                }
             }
             level.chests.add(chest);
             level.setTopTileAt(room.getCenter().x,room.getCenter().y,11);
 
-        }
+
     }
 
     private static void hCorridor(int prevX, int newX, int y, Level level) {

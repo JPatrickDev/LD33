@@ -49,7 +49,9 @@ public class GUI {
                 graphics.fillRect(x, y + 16, pixelsToFill, 8);
                 graphics.setColor(Color.black);
                 if(weaponInSlot instanceof RangedWeapon){
-                    graphics.drawString(level.getPlayer().ammo.get(((RangedWeapon)weaponInSlot).getProjectileType()) + "",x,y+20);
+                    String ammoCount = level.getPlayer().ammo.get(((RangedWeapon) weaponInSlot).getProjectileType()) + "";
+                    if(!ammoCount.equalsIgnoreCase("null"))
+                    graphics.drawString( ammoCount,x,y+20);
                 }
                 if (level.getPlayer().selectedWeaponSlot == i) {
                     graphics.setColor(Color.red);
@@ -205,6 +207,10 @@ public class GUI {
                         level.getPlayer().getWeapons().setSlot(i, weapon);//TODO SOUND EFFECT IF CAN'T FIT
                         currentChest.removeItem(selected);
                     }
+                }else if(selected instanceof Ammo){
+                    Ammo ammo = (Ammo)selected;
+                    level.getPlayer().addAmmo(ammo.getAmount(),ammo.getType());
+                    currentChest.removeItem(selected);
                 }
             }
         }

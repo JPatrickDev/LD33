@@ -34,4 +34,8 @@ public class Chest {
     public void removeItem(Item selected) {
         items.remove(selected);
     }
+
+    public boolean isEmpty() {
+        return items.isEmpty();
+    }
 }

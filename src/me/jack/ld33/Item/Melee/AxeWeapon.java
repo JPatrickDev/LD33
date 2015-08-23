@@ -10,9 +10,9 @@ public class AxeWeapon extends MeleeWeapon {
     public AxeWeapon() {
         super(weaponIcons.getSprite(1,0), weaponSprites.getSprite(1,0),"Axe");
         setAttackRadius(128f);
-        setCondition(100f);
+        setCondition(250f);
         setDamage(15f);
-        setMaxCondition(100f);
+        setMaxCondition(250f);
     }
 
 }

@@ -24,7 +24,7 @@ public class SmallBloodParticle extends Particle {
         yy = y;
 
         Random random = new Random();
-        xa = random.nextGaussian() * 5;
+        xa = random.nextGaussian() * 2;
         ya = random.nextGaussian() * 5;
     }
 

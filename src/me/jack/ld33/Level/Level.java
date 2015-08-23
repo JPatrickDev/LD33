@@ -73,12 +73,6 @@ public class Level implements TileBasedMap {
         if(player == null) {
             player = new MobPlayer(x * TILESIZE, y * TILESIZE);
             player.getWeapons().setSlot(0, new DaggerWeapon());
-            player.getWeapons().setSlot(1, new AxeWeapon());
-            player.getWeapons().setSlot(2, new PistolWeapon());
-            player.ammo.put(ProjectileType.SMALL_BULLET, 20);
-            player.getWeapons().setSlot(3, new MachineGunWeapon());
-            player.ammo.put(ProjectileType.BULLET, 200);
-
         }else{
             player.setX(x*TILESIZE);
             player.setY(y*TILESIZE);

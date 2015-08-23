@@ -37,6 +37,7 @@ public class RangedWeapon extends Weapon {
         }
         if(user instanceof MobPlayer){
             System.out.println(level.getPlayer().ammo.get(projectileType));
+            if(!level.getPlayer().ammo.containsKey(projectileType))return;
             if(level.getPlayer().ammo.get(projectileType) <= 0)return; //TODO SOUND EFFECT?
             level.getPlayer().ammo.put(projectileType,level.getPlayer().ammo.get(projectileType)-1);
         }
