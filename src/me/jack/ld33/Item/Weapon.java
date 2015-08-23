@@ -49,7 +49,8 @@ public class Weapon extends Item{
     public static String getType(Weapon selected) {
         if(selected instanceof MeleeWeapon){
             return "Melee Weapon";
-        }
+        }else if(selected instanceof RangedWeapon)
+            return "Ranged Weapon";
         return "Unknown weapon type";
     }
 }

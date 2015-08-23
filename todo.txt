@@ -55,9 +55,10 @@ Items
         - Food
 
 Graphics
-    - Art for humans
+    - Art for humans/
         - Player looks slightly different to rest
            - red eyes/
+
     - Better floor, wall tiles
     - finish the corners
     - Proper GUI

@@ -40,10 +40,16 @@ public class InGameState extends BasicGameState {
 
     public static Random random = new Random();
 
+    public static int mX, mY;
+
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
 
-        if(!GUI.isRenderingChestGUI && !GUI.renderingWeaponOverlay) {
+        Input ii = gameContainer.getInput();
+        mX = ii.getMouseX();
+        mY = ii.getMouseY();
+
+        if (!GUI.isRenderingChestGUI && !GUI.renderingWeaponOverlay) {
             level.update(i);
             if (level.getPlayer() != null) {
                 level.getPlayer().angle = (float) -(Math.atan2(level.getPlayer().getX() - (gameContainer.getInput().getMouseX() + level.camera.x), level.getPlayer().getY() - (gameContainer.getInput().getMouseY() + level.camera.y)) * 180 / Math.PI);
@@ -98,10 +104,10 @@ public class InGameState extends BasicGameState {
             }
         } else {
             if (!GUI.mouseClick(button, x, y, level)) {
-                if(level.topLayer[(x + level.camera.x)/64][(y + level.camera.y)/64] == 0)
-                level.getPlayer().attack(level);
-                else{
-                    Chest chest = level.getChestAt((x + level.camera.x)/64,(y + level.camera.y)/64);
+                if (level.topLayer[(x + level.camera.x) / 64][(y + level.camera.y) / 64] == 0)
+                    level.getPlayer().attack(level);
+                else {
+                    Chest chest = level.getChestAt((x + level.camera.x) / 64, (y + level.camera.y) / 64);
                     System.out.println(String.valueOf(chest == null));
                     GUI.currentChest = chest;
                     GUI.isRenderingChestGUI = true;

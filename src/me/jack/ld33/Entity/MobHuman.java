@@ -5,10 +5,12 @@ import me.jack.ld33.Level.Level;
 import me.jack.ld33.Particles.SmallBloodParticle;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
 import org.newdawn.slick.util.pathfinding.Mover;
 import org.newdawn.slick.util.pathfinding.Path;
+import uk.co.jdpatrick.JEngine.Image.ImageUtil;
 
 
 import java.awt.Point;
@@ -24,8 +26,13 @@ public class MobHuman extends Mob implements Mover {
 
     Human_Behaviour currentBehaviour = null;
 
+    public static Image humanSprite;
+
     public MobHuman(int x, int y) {
         super(x, y, 32, 32);
+        if (humanSprite == null) {
+            humanSprite = ImageUtil.loadImage("res/human.png");
+        }
         currentBehaviour = Human_Behaviour.randomBehaviour();
         currentBehaviour = Human_Behaviour.FLEEING;
         this.health = 20f;
@@ -197,7 +204,7 @@ public class MobHuman extends Mob implements Mover {
         //   }
         if (movingTo != null)
             graphics.fillRect(movingTo.x, movingTo.y, 64, 64);
-        super.render(graphics);
+     graphics.drawImage(humanSprite,getX(),getY());
     }
 
 }

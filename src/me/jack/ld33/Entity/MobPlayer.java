@@ -1,9 +1,11 @@
 package me.jack.ld33.Entity;
 
 import me.jack.ld33.Item.MeleeWeapon;
+import me.jack.ld33.Item.RangedWeapon;
 import me.jack.ld33.Item.Weapon;
 import me.jack.ld33.Item.WeaponInventory;
 import me.jack.ld33.Level.Level;
+import me.jack.ld33.States.InGameState;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -78,6 +80,13 @@ public class MobPlayer extends Mob {
         }
         if (weapon instanceof MeleeWeapon)
             meleeAttack(level, (MeleeWeapon) weapon);
+        else if(weapon instanceof RangedWeapon){
+            rangedAttack(level,(RangedWeapon)weapon);
+        }
+    }
+
+    private void rangedAttack(Level level, RangedWeapon weapon) {
+        weapon.fire(InGameState.mX + level.camera.x,InGameState.mY + level.camera.y,level,this);
     }
 
 
