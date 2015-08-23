@@ -36,8 +36,8 @@ Combat
 - Weapons
     - Dagger/
     - Axe/
-    - Pistol
-    - Machine Gun
+    - Pistol/
+    - Machine Gun/
     - Grenades
     - Magic?
     - Flamethrower? *********************************
@@ -59,7 +59,7 @@ Graphics
         - Player looks slightly different to rest
            - red eyes/
 
-    - Better floor, wall tiles
+    - Better floor, wall tiles/
     - finish the corners
     - Proper GUI
        - Polished and themed
@@ -78,7 +78,6 @@ Misc
     - Scoring system******/
     - Multiple levels
         - Slightly different art for each (Darker as you get deeper/Lava?)
-    - Speedrunning?
     - Reduce number of different Random objects
     - Remove System.out calls
     - Checking if a tile = 1 is no longer enough to be sure it's an empty tile(Chests)
