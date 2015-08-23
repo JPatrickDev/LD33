@@ -3,8 +3,10 @@ package me.jack.ld33.GUI;
 import me.jack.ld33.Item.*;
 import me.jack.ld33.Level.Level;
 import me.jack.ld33.States.InGameState;
+import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import uk.co.jdpatrick.JEngine.Image.ImageUtil;
 
 import java.awt.*;
 
@@ -14,7 +16,11 @@ import java.awt.*;
 public class GUI {
 
 
+    public static org.newdawn.slick.Image weapon_slot = null;
     public static void renderHUD(Graphics graphics, Level level) {
+        if(weapon_slot == null){
+            weapon_slot = ImageUtil.loadImage("res/weapon_slot.png");
+        }
         graphics.setColor(Color.white);
         graphics.fillRect(0, 500, 800, 100);
         graphics.setColor(Color.black);
@@ -39,14 +45,14 @@ public class GUI {
         graphics.setColor(Color.black);
         int x = 10, y = 510;
         for (int i = 0; i != 3; i++) {
-            graphics.drawRect(x, y, 32, 32);
+           graphics.drawImage(weapon_slot,x,y);
             if (level.getPlayer().getWeapons().getWeapon(i) != null) {
                 Weapon weaponInSlot = level.getPlayer().getWeapons().getWeapon(i);
-                graphics.drawImage(weaponInSlot.getIcon(), x + 8, y);
+                graphics.drawImage(weaponInSlot.getIcon().getScaledCopy(1.5f), x + 8, y);
                 float fillAmount = (weaponInSlot.getCondition() / weaponInSlot.getMaxCondition());
                 int pixelsToFill = (int) (32 * fillAmount);
                 graphics.setColor(Color.red);
-                graphics.fillRect(x, y + 16, pixelsToFill, 8);
+                graphics.fillRect(x, y + 24, pixelsToFill, 8);
                 graphics.setColor(Color.black);
                 if(weaponInSlot instanceof RangedWeapon){
                     String ammoCount = level.getPlayer().ammo.get(((RangedWeapon) weaponInSlot).getProjectileType()) + "";
@@ -64,14 +70,14 @@ public class GUI {
         x = 10;
         y = 546;
         for (int i = 3; i != 6; i++) {
-            graphics.drawRect(x, y, 32, 32);
+            graphics.drawImage(weapon_slot, x, y);
             if (level.getPlayer().getWeapons().getWeapon(i) != null) {
                 Weapon weaponInSlot = level.getPlayer().getWeapons().getWeapon(i);
-                graphics.drawImage(weaponInSlot.getIcon(), x + 8, y);
+                graphics.drawImage(weaponInSlot.getIcon().getScaledCopy(1.5f), x + 8, y);
                 float fillAmount = (weaponInSlot.getCondition() / weaponInSlot.getMaxCondition());
                 int pixelsToFill = (int) (32 * fillAmount);
                 graphics.setColor(Color.red);
-                graphics.fillRect(x, y + 16, pixelsToFill, 8);
+                graphics.fillRect(x, y + 24, pixelsToFill, 8);
                 graphics.setColor(Color.black);
                 if(weaponInSlot instanceof RangedWeapon){
                     graphics.drawString(level.getPlayer().ammo.get(((RangedWeapon)weaponInSlot).getProjectileType()) + "",x,y+20);
