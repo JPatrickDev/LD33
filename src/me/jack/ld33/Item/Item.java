@@ -9,10 +9,11 @@ public class Item {
 
     private Image icon;
     private Image sprite;
-
-    public Item(Image icon, Image sprite) {
+    private String name;
+    public Item(Image icon, Image sprite,String name) {
         this.icon = icon;
         this.sprite = sprite;
+        this.name = name;
     }
 
     public Image getIcon() {
@@ -23,4 +24,7 @@ public class Item {
         return sprite;
     }
 
+    public String getName() {
+        return name;
+    }
 }

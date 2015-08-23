@@ -24,18 +24,18 @@ Combat
     - Weapon items/
     - Equipped Slot/
     - Inventory/
-        - Keyboard shortcuts to swap between weapons quickly?
+        - Keyboard shortcuts to swap between weapons quickly/
         - Can only carry a limited number of weapons/
-            - Can drop and pick weapons back up
+            - Can drop and pick weapons back up/
                 - Any weapons you drop can be picked up by a aggressive human?
-        - Clicking on a weapon slot brings up info about the weapon
-            - Stats
+        - Clicking on a weapon slot brings up info about the weapon/
+            - Stats/
             - Description
 
 
 - Weapons
     - Dagger/
-    - Axe?
+    - Axe/
     - Pistol
     - Machine Gun
     - Grenades
@@ -70,3 +70,11 @@ Sound
     - MUTE BUTTON EASY TO FIND
     - Bg music if have time
 
+
+Misc
+    - Scoring system******
+    - Mutliple levels
+        - Slightly different art for each (Darker as you get deeper/Lava?)
+    - Speedrunning?
+    - Reduce number of different Random objects
+    - Remove System.out calls

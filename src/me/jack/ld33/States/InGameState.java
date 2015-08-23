@@ -6,6 +6,7 @@ import me.jack.ld33.Item.Weapon;
 import me.jack.ld33.Level.Level;
 import me.jack.ld33.Level.LevelGenerator;
 import me.jack.ld33.Level.Tile.Tile;
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -40,6 +41,7 @@ public class InGameState extends BasicGameState {
     long time = 0;
 
     public static Random random = new Random();
+
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         level.update(i);
@@ -51,8 +53,8 @@ public class InGameState extends BasicGameState {
         if (time > 500) {
             for (int x = 0; x != level.getWidth(); x++) {
                 for (int y = 0; y != level.getHeight(); y++) {
-                       if(level.getTileAt(x,y) == 1 && random.nextInt(500) == 0){
-                        level.spawnHuman(x*64,y*64);
+                    if (level.getTileAt(x, y) == 1 && random.nextInt(500) == 0) {
+                        level.spawnHuman(x * 64, y * 64);
                     }
                 }
             }
@@ -62,14 +64,43 @@ public class InGameState extends BasicGameState {
     }
 
     @Override
+    public void keyPressed(int key, char c) {
+        super.keyPressed(key, c);
+        switch (key) {
+            case Keyboard.KEY_1:
+                level.getPlayer().selectedWeaponSlot = 0;
+                break;
+            case Keyboard.KEY_2:
+                level.getPlayer().selectedWeaponSlot = 1;
+                break;
+            case Keyboard.KEY_3:
+                level.getPlayer().selectedWeaponSlot = 2;
+                break;
+            case Keyboard.KEY_4:
+                level.getPlayer().selectedWeaponSlot = 3;
+                break;
+            case Keyboard.KEY_5:
+                level.getPlayer().selectedWeaponSlot = 4;
+                break;
+            case Keyboard.KEY_6:
+                level.getPlayer().selectedWeaponSlot = 5;
+                break;
+        }
+    }
+
+    @Override
     public void mouseClicked(int button, int x, int y, int clickCount) {
         super.mouseClicked(button, x, y, clickCount);
         if (button == Input.MOUSE_MIDDLE_BUTTON) {
             for (int i = 0; i != 1; i++) {
                 level.spawnHuman(level.getPlayer().getX(), level.getPlayer().getY());
             }
-        } else
-            level.getPlayer().attack(level);
+        } else {
+            if (!GUI.mouseClick(button, x, y, level)) {
+                level.getPlayer().attack(level);
+            }
+
+        }
     }
 
     @Override

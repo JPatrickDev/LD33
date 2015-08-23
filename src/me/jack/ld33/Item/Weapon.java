@@ -17,8 +17,9 @@ public class Weapon extends Item{
         weaponSprites = new SpriteSheet("res/weapon_sprites.png",32,32);
     }
     private float damage, condition,maxCondition;
-    public Weapon(Image icon, Image sprite) {
-        super(icon, sprite);
+
+    public Weapon(Image icon, Image sprite,String name) {
+        super(icon, sprite,name);
     }
 
     public float getDamage() {
@@ -43,5 +44,12 @@ public class Weapon extends Item{
 
     public void setMaxCondition(float maxCondition) {
         this.maxCondition = maxCondition;
+    }
+
+    public static String getType(Weapon selected) {
+        if(selected instanceof MeleeWeapon){
+            return "Melee Weapon";
+        }
+        return "Unknown weapon type";
     }
 }

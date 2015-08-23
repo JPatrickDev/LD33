@@ -1,5 +1,6 @@
 package me.jack.ld33.Entity;
 
+import me.jack.ld33.Item.Melee.AxeWeapon;
 import me.jack.ld33.Level.Level;
 import me.jack.ld33.Particles.SmallBloodParticle;
 import org.newdawn.slick.Color;
@@ -50,6 +51,7 @@ public class MobHuman extends Mob implements Mover {
             level.entities.remove(this);
             for (int i = 0; i != 25; i++)
                 level.particleSystem.addParticle(new SmallBloodParticle(getX(), getY()));
+            level.dropItem(new AxeWeapon(),getX(),getY());
             return;
         }
 

@@ -16,6 +16,8 @@ public class LD33Game extends StateBasedGame {
 
     @Override
     public void initStatesList(GameContainer gameContainer) throws SlickException {
+        gameContainer.setUpdateOnlyWhenVisible(false);
+        gameContainer.setAlwaysRender(true);
         this.addState(new InGameState());
     }
 }

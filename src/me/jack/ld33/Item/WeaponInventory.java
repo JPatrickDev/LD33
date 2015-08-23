@@ -17,4 +17,18 @@ public class WeaponInventory {
         weapons[slot] = weapon;
     }
 
+    public void removeWeapon(Weapon currentOverlay) {
+        for(int i = 0;i!= weapons.length;i++){
+            if(weapons[i] == currentOverlay)
+                weapons[i] = null;
+        }
+    }
+
+    public int getWeaponPos(Weapon currentOverlay) {
+        for(int i = 0;i!= weapons.length;i++){
+            if(weapons[i] == currentOverlay)
+              return i;
+        }
+        return -1;
+    }
 }

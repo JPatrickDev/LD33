@@ -11,8 +11,8 @@ public class MeleeWeapon extends Weapon{
 
     private float attackRadius;
 
-    public MeleeWeapon(Image icon, Image sprite) {
-        super(icon, sprite);
+    public MeleeWeapon(Image icon, Image sprite,String name) {
+        super(icon, sprite,name);
     }
 
     public float getAttackRadius() {

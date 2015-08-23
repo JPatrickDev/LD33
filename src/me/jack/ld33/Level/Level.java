@@ -1,9 +1,8 @@
 package me.jack.ld33.Level;
 
-import me.jack.ld33.Entity.Entity;
-import me.jack.ld33.Entity.MobBat;
-import me.jack.ld33.Entity.MobHuman;
-import me.jack.ld33.Entity.MobPlayer;
+import me.jack.ld33.Entity.*;
+import me.jack.ld33.Item.Item;
+import me.jack.ld33.Item.Melee.AxeWeapon;
 import me.jack.ld33.Item.Melee.DaggerWeapon;
 import me.jack.ld33.Level.Tile.Tile;
 import org.newdawn.slick.Graphics;
@@ -13,7 +12,7 @@ import org.newdawn.slick.util.pathfinding.TileBasedMap;
 import uk.co.jdpatrick.JEngine.Particle.ParticleSystem;
 
 
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -59,7 +58,7 @@ public class Level implements TileBasedMap {
         }
         player = new MobPlayer(x * TILESIZE, y * TILESIZE);
         player.getWeapons().setSlot(0, new DaggerWeapon());
-
+        player.getWeapons().setSlot(1, new AxeWeapon());
 
 
         for (int xx = 0; xx != width; xx++) {
@@ -67,10 +66,10 @@ public class Level implements TileBasedMap {
                 Tile tile = Tile.getTile(getTileAt(xx, yy));
                 if (tile.isSolid()) {
                     hitboxes.add(new Rectangle(xx * TILESIZE, yy * TILESIZE, TILESIZE, TILESIZE));
-                }else{
-                    if(getTileAt(xx,yy) == 1 && r.nextInt(50) == 0){
-                        for(int i = 0;i!= 1;i++){
-                            spawnHuman(xx*TILESIZE,yy * TILESIZE);
+                } else {
+                    if (getTileAt(xx, yy) == 1 && r.nextInt(50) == 0) {
+                        for (int i = 0; i != 1; i++) {
+                            spawnHuman(xx * TILESIZE, yy * TILESIZE);
                         }
                     }
                 }
@@ -152,7 +151,7 @@ public class Level implements TileBasedMap {
     }
 
 
-    public boolean canMove(int newX, int newY, int width, int height,Entity entity) {
+    public boolean canMove(int newX, int newY, int width, int height, Entity entity) {
         Rectangle rekt = new Rectangle(newX, newY, width, height);
         for (Rectangle rectangle : hitboxes) {
             if (rekt.intersects(rectangle)) return false;
@@ -189,7 +188,7 @@ public class Level implements TileBasedMap {
 
     @Override
     public boolean blocked(PathFindingContext pathFindingContext, int i, int i1) {
-        return getTileAt(i,i1) != 1;
+        return getTileAt(i, i1) != 1;
     }
 
     @Override
@@ -209,16 +208,42 @@ public class Level implements TileBasedMap {
         return width;
     }
 
-    public void spawnBat(int x,int y) {
-        entities.add(new MobBat(x,y));
+    public void spawnBat(int x, int y) {
+        entities.add(new MobBat(x, y));
     }
 
-    public void spawnHuman(int x,int y) {
+    public void spawnHuman(int x, int y) {
         System.out.println("Human Spawned");
-        entities.add(new MobHuman(x,y));
+        entities.add(new MobHuman(x, y));
     }
 
     public MobPlayer getPlayer() {
         return player;
+    }
+
+    public Rectangle getPlayerHitbox() {
+        return new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+    }
+
+    public void dropItem(Item item, int x, int y) {
+        entities.add(new EntityItem(x, y, item));
+    }
+
+    public void playerDropItem(Item item){
+        int tX = getPlayer().getX()/64;
+        int tY = getPlayer().getY()/64;
+        ArrayList<Point> possibleDrops = new ArrayList<Point>();
+
+        if(getTileAt(tX - 1,tY) == 1)
+            possibleDrops.add(new Point(tX-1,tY));
+        if(getTileAt(tX + 1,tY) == 1)
+            possibleDrops.add(new Point(tX+1,tY));
+        if(getTileAt(tX,tY-1) == 1)
+            possibleDrops.add(new Point(tX,tY-1));
+        if(getTileAt(tX,tY+1) == 1)
+            possibleDrops.add(new Point(tX,tY+1));
+
+        Point dropPoint = possibleDrops.get(MobHuman.random.nextInt(possibleDrops.size()));
+        dropItem(item,dropPoint.x*64,dropPoint.y*64);
     }
 }
