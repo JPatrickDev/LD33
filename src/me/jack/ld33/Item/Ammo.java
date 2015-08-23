@@ -11,7 +11,7 @@ public class Ammo extends Item{
     private ProjectileType type;
     private int amount;
     public Ammo(ProjectileType type, int amount) {
-        super(Weapon.weaponIcons.getSprite(0,2), Weapon.weaponSprites.getSprite(0,2), "Ammo");
+        super(Weapon.weaponIcons.getSprite(type.getAmmoSprite().x,type.getAmmoSprite().y), Weapon.weaponSprites.getSprite(type.getAmmoSprite().x,type.getAmmoSprite().y), "Ammo");
         this.type = type;
         this.amount = amount;
     }
