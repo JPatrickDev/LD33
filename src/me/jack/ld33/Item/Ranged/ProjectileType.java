@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public enum ProjectileType {
 
-    SMALL_BULLET(10f, 20f), BULLET(20f, 30f);
+    SMALL_BULLET(10f, 20f), BULLET(20f, 30f), FIRE(40f,40f);
 
     private float moveSpeed, damage;
 

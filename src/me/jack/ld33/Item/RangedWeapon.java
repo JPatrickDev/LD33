@@ -6,6 +6,9 @@ import me.jack.ld33.Entity.MobHuman;
 import me.jack.ld33.Entity.MobPlayer;
 import me.jack.ld33.Item.Ranged.ProjectileType;
 import me.jack.ld33.Level.Level;
+import org.newdawn.slick.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import java.awt.*;
@@ -47,6 +50,11 @@ public class RangedWeapon extends Weapon {
                 .sqrt(xSpeed * xSpeed + ySpeed * ySpeed));
         xSpeed = xSpeed * factor;
         ySpeed = ySpeed * factor;
+        if(getProjectileType() == ProjectileType.FIRE){
+            for(int i = 0;i!= 5;i++){
+                level.entities.add(new Projectile(xSpeed, ySpeed, user.getX(), user.getY(), projectileType));
+            }
+        }
         level.entities.add(new Projectile(xSpeed, ySpeed, user.getX(), user.getY(), projectileType));
         lastShot = System.currentTimeMillis();
     }
@@ -100,9 +108,24 @@ class Projectile extends Entity {
                 level.entities.remove(this);
             }
         }
+
+        if(type == ProjectileType.FIRE){
+            float xa = (float) MobHuman.random.nextGaussian()*10;
+            addX((int) xa);
+            float ya = (float) MobHuman.random.nextGaussian()*10;
+            addY((int) ya);
+        }
     }
 
     public ProjectileType getType() {
         return type;
+    }
+
+    @Override
+    public void render(Graphics graphics) {
+        if(type == ProjectileType.FIRE)
+            graphics.setColor(Color.red);
+        super.render(graphics);
+        graphics.setColor(Color.white);
     }
 }

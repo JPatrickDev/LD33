@@ -18,7 +18,7 @@ public abstract class Entity {
     }
 
     public void render(Graphics graphics) {
-        graphics.setColor(Color.white);
+
         graphics.fillRect(x, y, width, height);
     }
 

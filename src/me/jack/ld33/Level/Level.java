@@ -5,6 +5,7 @@ import me.jack.ld33.Item.Chest;
 import me.jack.ld33.Item.Item;
 import me.jack.ld33.Item.Melee.AxeWeapon;
 import me.jack.ld33.Item.Melee.DaggerWeapon;
+import me.jack.ld33.Item.Ranged.FlameThrowerWeapon;
 import me.jack.ld33.Item.Ranged.MachineGunWeapon;
 import me.jack.ld33.Item.Ranged.PistolWeapon;
 import me.jack.ld33.Item.Ranged.ProjectileType;
@@ -73,6 +74,8 @@ public class Level implements TileBasedMap {
         if(player == null) {
             player = new MobPlayer(x * TILESIZE, y * TILESIZE);
             player.getWeapons().setSlot(0, new DaggerWeapon());
+            player.getWeapons().setSlot(1, new FlameThrowerWeapon());
+            player.addAmmo(100,ProjectileType.FIRE);
         }else{
             player.setX(x*TILESIZE);
             player.setY(y*TILESIZE);
@@ -138,7 +141,7 @@ public class Level implements TileBasedMap {
         }
         player.update(this, delta);
         if(Mouse.isButtonDown(0)){
-            if(player.getWeapons().getWeapon(player.selectedWeaponSlot) instanceof MachineGunWeapon){
+            if(player.getWeapons().getWeapon(player.selectedWeaponSlot) instanceof MachineGunWeapon || player.getWeapons().getWeapon(player.selectedWeaponSlot) instanceof FlameThrowerWeapon){
               player.attack(this);
             }
         }
