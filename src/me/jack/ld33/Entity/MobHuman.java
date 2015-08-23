@@ -76,7 +76,8 @@ public class MobHuman extends Mob implements Mover {
             level.entities.remove(this);
             for (int i = 0; i != 25; i++)
                 level.particleSystem.addParticle(new SmallBloodParticle(getX(), getY()));
-            level.dropItem(new Ammo(ProjectileType.BULLET, 10), getX(), getY());
+            if(random.nextInt(10) == 0)
+            level.dropItem(new Ammo(ProjectileType.randomProjectile(), random.nextInt(10) + 20), getX(), getY());
             level.humansAlive--;
             level.humansKilled++;
             return;

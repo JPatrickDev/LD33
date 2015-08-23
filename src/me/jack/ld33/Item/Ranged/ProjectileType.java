@@ -1,5 +1,7 @@
 package me.jack.ld33.Item.Ranged;
 
+import java.util.Random;
+
 /**
  * Created by Jack on 23/08/2015.
  */
@@ -21,4 +23,9 @@ public float getMoveSpeed() {
 public float getDamage() {
         return damage;
         }
-        }
+
+    public static Random random = new Random();
+    public static ProjectileType randomProjectile() {
+        return ProjectileType.values()[random.nextInt(ProjectileType.values().length)];
+    }
+}
