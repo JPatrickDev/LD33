@@ -1,5 +1,9 @@
 package me.jack.ld33.Level;
 
+import me.jack.ld33.Entity.MobHuman;
+import me.jack.ld33.Item.Chest;
+import me.jack.ld33.Item.Melee.AxeWeapon;
+import me.jack.ld33.Item.Melee.DaggerWeapon;
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
 import org.newdawn.slick.util.pathfinding.Mover;
 import org.newdawn.slick.util.pathfinding.Path;
@@ -23,7 +27,8 @@ public class LevelGenerator {
                 tiles[x][y] = 2;
             }
         }
-        Level level = new Level(width, height, tiles);
+        int[][] topLayer = new int[width][height];
+        Level level = new Level(width, height, tiles,topLayer);
 
         placeRooms(level);
 
@@ -71,6 +76,13 @@ public class LevelGenerator {
         for (int x = room.getX(); x != room.getX() + room.getWidth(); x++) {
             for (int y = room.getY(); y != room.getY() + room.getHeight(); y++) {
                 level.setTileAt(x, y, 1);
+                if(MobHuman.random.nextInt(100) == 0) {
+                    Chest chest = new Chest(new Point(x,y));
+                    chest.addItem(new AxeWeapon());
+                    chest.addItem(new DaggerWeapon());
+                    level.chests.add(chest);
+                    level.setTopTileAt(x, y, 11);
+                }
             }
         }
     }
@@ -225,7 +237,7 @@ public class LevelGenerator {
             for (int x = 0; x != level.levelTiles.length; x++) {
                 for (int y = 0; y != level.levelTiles[0].length; y++) {
                     float p = level.levelTiles[x][y];
-
+                    float tp = level.topLayer[x][y];
                     Color c = null;
                     if (p == 1) c = Color.WHITE;
                     if (p == 2) c = Color.BLACK;
@@ -234,6 +246,7 @@ public class LevelGenerator {
                     if (p == 5) c = Color.green;
                     if (p == 6) c = Color.magenta;
                     if (p == 7 || p == 8 || p == 9 || p == 10) c = Color.pink;
+                    if(tp == 11)c = Color.orange;
                     pixels[x + y * w] = c.hashCode();
 
                 }

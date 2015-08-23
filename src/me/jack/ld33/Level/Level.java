@@ -1,6 +1,7 @@
 package me.jack.ld33.Level;
 
 import me.jack.ld33.Entity.*;
+import me.jack.ld33.Item.Chest;
 import me.jack.ld33.Item.Item;
 import me.jack.ld33.Item.Melee.AxeWeapon;
 import me.jack.ld33.Item.Melee.DaggerWeapon;
@@ -29,17 +30,20 @@ public class Level implements TileBasedMap {
     private final int height;
 
     public int[][] levelTiles = new int[500][500];
-
+    public int[][] topLayer;
     public ArrayList<Rectangle> hitboxes = new ArrayList<Rectangle>();
     public CopyOnWriteArrayList<Entity> entities = new CopyOnWriteArrayList<Entity>();
+
+    public ArrayList<Chest> chests = new ArrayList<Chest>();
 
     public Camera camera = new Camera(1000, 1000, 64, 800, 600);
 
     MobPlayer player;
 
 
-    public Level(int width, int height, int[][] tiles) {
+    public Level(int width, int height, int[][] tiles,int[][] topLayer) {
         this.levelTiles = tiles;
+        this.topLayer = topLayer;
         this.width = width;
         this.height = height;
         //  camera.calculate(30 * TILESIZE, 30 * TILESIZE);
@@ -64,7 +68,7 @@ public class Level implements TileBasedMap {
         for (int xx = 0; xx != width; xx++) {
             for (int yy = 0; yy != height; yy++) {
                 Tile tile = Tile.getTile(getTileAt(xx, yy));
-                if (tile.isSolid()) {
+                if (tile.isSolid() || topLayer[xx][yy] != 0) {
                     hitboxes.add(new Rectangle(xx * TILESIZE, yy * TILESIZE, TILESIZE, TILESIZE));
                 } else {
                     if (getTileAt(xx, yy) == 1 && r.nextInt(50) == 0) {
@@ -87,6 +91,18 @@ public class Level implements TileBasedMap {
                 //      if((x*TILESIZE) <0 || (x*TILESIZE) > 832)continue;
                 // if((y*TILESIZE) <0 || (y*TILESIZE) > 632) continue;
                 // if (onScreen(x * TILESIZE, y * TILESIZE))
+                tile.render((x) * TILESIZE, (y) * TILESIZE, g);
+            }
+        }
+        for (int x = 0; x != levelTiles.length; x++) {
+            for (int y = 0; y != levelTiles[0].length; y++) {
+                int i = topLayer[x][y];
+                Tile tile = Tile.getTile(i);
+                //      if((x*TILESIZE) <0 || (x*TILESIZE) > 832)continue;
+                // if((y*TILESIZE) <0 || (y*TILESIZE) > 632) continue;
+                // if (onScreen(x * TILESIZE, y * TILESIZE))
+                if(i == 0)
+                    continue;
                 tile.render((x) * TILESIZE, (y) * TILESIZE, g);
             }
         }
@@ -244,6 +260,32 @@ public class Level implements TileBasedMap {
             possibleDrops.add(new Point(tX,tY+1));
 
         Point dropPoint = possibleDrops.get(MobHuman.random.nextInt(possibleDrops.size()));
-        dropItem(item,dropPoint.x*64,dropPoint.y*64);
+        dropItem(item, dropPoint.x * 64, dropPoint.y * 64);
+    }
+
+
+    public int getTopTileAt(int x, int y) {
+        try {
+            return topLayer[x][y];
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
+    public void setTopTileAt(int x, int y, int i) {
+        try {
+            this.topLayer[x][y] = i;
+        } catch (Exception e) {
+
+        }
+    }
+
+    public Chest getChestAt(int x,int y){
+        for(Chest chest : chests){
+            if(chest.getOwner().x == x && chest.getOwner().y == y){
+                return chest;
+            }
+        }
+        return null;
     }
 }

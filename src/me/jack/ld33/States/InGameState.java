@@ -1,6 +1,7 @@
 package me.jack.ld33.States;
 
 import me.jack.ld33.GUI.GUI;
+import me.jack.ld33.Item.Chest;
 import me.jack.ld33.Item.Item;
 import me.jack.ld33.Item.Weapon;
 import me.jack.ld33.Level.Level;
@@ -25,9 +26,6 @@ public class InGameState extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         Tile.initTiles();
         Weapon.init();
-
-
-        //   this.level = new Level();
         level = LevelGenerator.generateLevel(50, 50, false);
     }
 
@@ -97,7 +95,15 @@ public class InGameState extends BasicGameState {
             }
         } else {
             if (!GUI.mouseClick(button, x, y, level)) {
+                if(level.topLayer[(x + level.camera.x)/64][(y + level.camera.y)/64] == 0)
                 level.getPlayer().attack(level);
+                else{
+                    Chest chest = level.getChestAt((x + level.camera.x)/64,(y + level.camera.y)/64);
+                    System.out.println(String.valueOf(chest == null));
+                    GUI.currentChest = chest;
+                    GUI.isRenderingChestGUI = true;
+                }
+
             }
 
         }

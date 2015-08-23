@@ -25,13 +25,13 @@ public class Tile {
 
 
 
-    public static SpriteSheet tileSpriteSheet = null;
+    public static SpriteSheet tileSpriteSheet = null,altSprites;
     private static HashMap<Integer, Tile> tileLookup = new HashMap<Integer, Tile>();
 
 
     public static void initTiles() throws SlickException {
         tileSpriteSheet = new SpriteSheet("res/floor_1_tileset.png", 16, 16);
-        new StoneFloor();
+        altSprites = new SpriteSheet("res/tileset.png", 16, 16);new StoneFloor();
         new StoneWall();
         new StoneWallLeft();
         new StoneWallTop();
@@ -41,13 +41,14 @@ public class Tile {
         new StoneCornerBottomLeft();
         new StoneCornerTopLeft();
         new StoneCornerTopRight();
+        new ChestTile();
     }
 
 
     private int x, y;
     private String name;
     private boolean solid;
-    private Image tileImage;
+    protected Image tileImage;
 
     public Tile(int x, int y, String name, boolean solid, int id) {
         this.x = x;

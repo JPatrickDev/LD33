@@ -1,5 +1,7 @@
 package me.jack.ld33.GUI;
 
+import me.jack.ld33.Item.Chest;
+import me.jack.ld33.Item.Item;
 import me.jack.ld33.Item.MeleeWeapon;
 import me.jack.ld33.Item.Weapon;
 import me.jack.ld33.Level.Level;
@@ -13,6 +15,8 @@ import java.awt.*;
  */
 public class GUI {
 
+
+
     public static void renderHUD(Graphics graphics, Level level) {
         graphics.setColor(Color.white);
         graphics.fillRect(0, 500, 800, 100);
@@ -20,6 +24,8 @@ public class GUI {
 
         if (renderingWeaponOverlay)
             renderWeaponInfoOverlay(graphics, currentOverlay);
+        if(isRenderingChestGUI)
+            renderChestGUI(graphics,currentChest);
     }
 
     static Rectangle slotOne = new Rectangle(10, 510, 32, 32);
@@ -161,17 +167,17 @@ public class GUI {
                     currentOverlay = level.getPlayer().getWeapons().getWeapon(2);
                     renderingWeaponOverlay = true;
                 }
-            }else if(slotFour.contains(xx,yy)){
+            } else if (slotFour.contains(xx, yy)) {
                 if (level.getPlayer().getWeapons().getWeapon(3) != null) {
                     currentOverlay = level.getPlayer().getWeapons().getWeapon(3);
                     renderingWeaponOverlay = true;
                 }
-            }else if(slotFive.contains(xx,yy)){
+            } else if (slotFive.contains(xx, yy)) {
                 if (level.getPlayer().getWeapons().getWeapon(4) != null) {
                     currentOverlay = level.getPlayer().getWeapons().getWeapon(4);
                     renderingWeaponOverlay = true;
                 }
-            }else if(slotSix.contains(xx,yy)){
+            } else if (slotSix.contains(xx, yy)) {
                 if (level.getPlayer().getWeapons().getWeapon(4) != null) {
                     currentOverlay = level.getPlayer().getWeapons().getWeapon(4);
                     renderingWeaponOverlay = true;
@@ -185,5 +191,24 @@ public class GUI {
 
     private static int calculatePercentage(Weapon weapon) {
         return (int) ((weapon.getCondition() / weapon.getMaxCondition()) * 100);
+    }
+    public static Chest currentChest;
+    public static boolean isRenderingChestGUI = false;
+    public static void renderChestGUI(Graphics graphics, Chest chest){
+        graphics.fillRect(200,150,400,300);
+        int rows = 3;
+        int columns = 4;
+        graphics.setColor(Color.black);
+        for(int x = 0;x!= columns;x++){
+            for(int y = 0;y!= rows;y++){
+                graphics.drawRect(216 + (x*100),166 + (y*100),64,64);
+                if(chest.getItem(x+y*columns) != null){
+                    Item item = chest.getItem(x+y*columns);
+                    graphics.drawImage(item.getSprite().getScaledCopy(2f),216 + (x*100),166 + (y*100));
+                    graphics.drawString(item.getName(),216 + (x*100),166+64 + (y*100));
+                }
+            }
+        }
+        graphics.setColor(Color.white);
     }
 }

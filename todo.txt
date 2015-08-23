@@ -78,3 +78,6 @@ Misc
     - Speedrunning?
     - Reduce number of different Random objects
     - Remove System.out calls
+    - Checking if a tile = 1 is no longer enough to be sure it's an empty tile(Chests)
+    - Slightly randomize the blood splat colours?
+    - Cache the scaled item sprite when rendering chests GUI
