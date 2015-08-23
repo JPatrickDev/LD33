@@ -16,18 +16,29 @@ import java.awt.*;
 public class RangedWeapon extends Weapon {
 
     private ProjectileType projectileType = null;
+    private long lastShot;
+    private int shotDelay;
 
-    public RangedWeapon(Image icon, Image sprite, String name, ProjectileType projectileType) {
+    public RangedWeapon(Image icon, Image sprite, String name, int shotDelay,ProjectileType projectileType) {
         super(icon, sprite, name);
         this.projectileType = projectileType;
+        this.shotDelay = shotDelay;
     }
 
     public void fire(int tX, int tY, Level level, Mob user) {
+        if(lastShot == 0)
+            lastShot = System.currentTimeMillis();
+        else{
+            long timeBetween = System.currentTimeMillis() - lastShot;
+            System.out.println(timeBetween);
+            if(timeBetween < shotDelay){
+                return;
+            }
+        }
         if(user instanceof MobPlayer){
             System.out.println(level.getPlayer().ammo.get(projectileType));
             if(level.getPlayer().ammo.get(projectileType) <= 0)return; //TODO SOUND EFFECT?
             level.getPlayer().ammo.put(projectileType,level.getPlayer().ammo.get(projectileType)-1);
-
         }
         float xSpeed = ((tX) - user.getX());
         float ySpeed = ((tY) - user.getY());
@@ -36,6 +47,7 @@ public class RangedWeapon extends Weapon {
         xSpeed = xSpeed * factor;
         ySpeed = ySpeed * factor;
         level.entities.add(new Projectile(xSpeed, ySpeed, user.getX(), user.getY(), projectileType));
+        lastShot = System.currentTimeMillis();
     }
 
     public ProjectileType getProjectileType() {

@@ -5,9 +5,13 @@ import me.jack.ld33.Item.Chest;
 import me.jack.ld33.Item.Item;
 import me.jack.ld33.Item.Melee.AxeWeapon;
 import me.jack.ld33.Item.Melee.DaggerWeapon;
+import me.jack.ld33.Item.Ranged.MachineGunWeapon;
 import me.jack.ld33.Item.Ranged.PistolWeapon;
 import me.jack.ld33.Item.Ranged.ProjectileType;
+import me.jack.ld33.Item.RangedWeapon;
 import me.jack.ld33.Level.Tile.Tile;
+import me.jack.ld33.States.InGameState;
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
@@ -66,7 +70,9 @@ public class Level implements TileBasedMap {
         player.getWeapons().setSlot(0, new DaggerWeapon());
         player.getWeapons().setSlot(1, new AxeWeapon());
         player.getWeapons().setSlot(2, new PistolWeapon());
-        player.ammo.put(ProjectileType.SMALL_BULLET,20);
+        player.ammo.put(ProjectileType.SMALL_BULLET, 20);
+        player.getWeapons().setSlot(3, new MachineGunWeapon());
+        player.ammo.put(ProjectileType.BULLET, 200);
 
 
 
@@ -105,9 +111,10 @@ public class Level implements TileBasedMap {
                 Tile tile = Tile.getTile(i);
                 //      if((x*TILESIZE) <0 || (x*TILESIZE) > 832)continue;
                 // if((y*TILESIZE) <0 || (y*TILESIZE) > 632) continue;
-                // if (onScreen(x * TILESIZE, y * TILESIZE))
+
                 if(i == 0)
                     continue;
+                if (onScreen(x * TILESIZE, y * TILESIZE))
                 tile.render((x) * TILESIZE, (y) * TILESIZE, g);
             }
         }
@@ -127,7 +134,11 @@ public class Level implements TileBasedMap {
             e.update(this, delta);
         }
         player.update(this, delta);
-
+        if(Mouse.isButtonDown(0)){
+            if(player.getWeapons().getWeapon(player.selectedWeaponSlot) instanceof MachineGunWeapon){
+              player.attack(this);
+            }
+        }
         particleSystem.update();
     }
 

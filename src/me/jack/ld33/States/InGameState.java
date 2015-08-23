@@ -3,6 +3,8 @@ package me.jack.ld33.States;
 import me.jack.ld33.GUI.GUI;
 import me.jack.ld33.Item.Chest;
 import me.jack.ld33.Item.Item;
+import me.jack.ld33.Item.MeleeWeapon;
+import me.jack.ld33.Item.Ranged.PistolWeapon;
 import me.jack.ld33.Item.Weapon;
 import me.jack.ld33.Level.Level;
 import me.jack.ld33.Level.LevelGenerator;
@@ -56,7 +58,7 @@ public class InGameState extends BasicGameState {
             }
             time += i;
 
-            if (time > 500) {
+            if (time > 10) {
                 for (int x = 0; x != level.getWidth(); x++) {
                     for (int y = 0; y != level.getHeight(); y++) {
                         if (level.getTileAt(x, y) == 1 && random.nextInt(500) == 0) {
@@ -104,9 +106,10 @@ public class InGameState extends BasicGameState {
             }
         } else {
             if (!GUI.mouseClick(button, x, y, level)) {
-                if (level.topLayer[(x + level.camera.x) / 64][(y + level.camera.y) / 64] == 0)
+                if (level.topLayer[(x + level.camera.x) / 64][(y + level.camera.y) / 64] == 0) {
+                    if(level.getPlayer().getWeapons().getWeapon(level.getPlayer().selectedWeaponSlot) instanceof MeleeWeapon ||level.getPlayer().getWeapons().getWeapon(level.getPlayer().selectedWeaponSlot) instanceof PistolWeapon)
                     level.getPlayer().attack(level);
-                else {
+                }else {
                     Chest chest = level.getChestAt((x + level.camera.x) / 64, (y + level.camera.y) / 64);
                     System.out.println(String.valueOf(chest == null));
                     GUI.currentChest = chest;

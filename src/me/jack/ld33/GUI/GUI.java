@@ -68,7 +68,7 @@ public class GUI {
                 graphics.fillRect(x, y + 16, pixelsToFill, 8);
                 graphics.setColor(Color.black);
                 if(weaponInSlot instanceof RangedWeapon){
-                    graphics.drawString("5",x,y+24);
+                    graphics.drawString(level.getPlayer().ammo.get(((RangedWeapon)weaponInSlot).getProjectileType()) + "",x,y+20);
                 }
                 if (level.getPlayer().selectedWeaponSlot == i) {
                     graphics.setColor(Color.red);
