@@ -23,6 +23,7 @@ public class RangedWeapon extends Weapon {
         super(icon, sprite, name);
         this.projectileType = projectileType;
         this.shotDelay = shotDelay;
+        setDamage(projectileType.getDamage());
     }
 
     public void fire(int tX, int tY, Level level, Mob user) {
@@ -54,6 +55,10 @@ public class RangedWeapon extends Weapon {
         }
         level.entities.add(new Projectile(xSpeed, ySpeed, user.getX(), user.getY(), projectileType));
         lastShot = System.currentTimeMillis();
+    }
+
+    public int getShotDelay() {
+        return shotDelay;
     }
 
     public ProjectileType getProjectileType() {

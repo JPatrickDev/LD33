@@ -11,7 +11,7 @@ public class DaggerWeapon extends MeleeWeapon{
     public DaggerWeapon() {
         super(weaponIcons.getSprite(0, 0), weaponSprites.getSprite(0, 0), "Dagger");
         setAttackRadius(64f);
-        setDamage(6f);
+        setDamage(15f);
     }
 
 }

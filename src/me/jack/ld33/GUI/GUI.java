@@ -21,15 +21,27 @@ public class GUI {
     public static Image HUD_BG = null;
     public static Image CHEST_BG = null;
     public static Image BACK_BUTTON = null;
+    public static Image EQUIP_BUTTON = null;
+    public static Image DROP_BUTTON = null;
+    public static Image BACK_BUTTON_SMALLER = null;
+    public static Image VIEW_WEAPON_BG = null;
+
     public static void renderHUD(Graphics graphics, Level level) {
-        if(weapon_slot == null){
+        if (weapon_slot == null) {
             weapon_slot = ImageUtil.loadImage("res/weapon_slot.png");
+
             HUD_BG = ImageUtil.loadImage("res/HUD_BG.png");
+
             CHEST_BG = ImageUtil.loadImage("res/chest_background.png");
             BACK_BUTTON = ImageUtil.loadImage("res/back_button.png");
+
+            EQUIP_BUTTON = ImageUtil.loadImage("res/equip_button.png");
+            DROP_BUTTON = ImageUtil.loadImage("res/drop_button.png");
+            BACK_BUTTON_SMALLER = ImageUtil.loadImage("res/back_button_smaller.png");
+            VIEW_WEAPON_BG = ImageUtil.loadImage("res/view_weapon_background.png");
         }
         graphics.setColor(Color.white);
-        graphics.drawImage(HUD_BG,0,500);
+        graphics.drawImage(HUD_BG, 0, 500);
         graphics.setColor(Color.black);
         graphics.drawString("Time left: " + InGameState.timeTaken / 1000, 600, 550);
         graphics.setColor(Color.white);
@@ -44,29 +56,29 @@ public class GUI {
     static Rectangle slotOne = new Rectangle(16, 515, 32, 32);
     static Rectangle slotTwo = new Rectangle(52, 515, 32, 32);
     static Rectangle slotThree = new Rectangle(88, 515, 32, 32);
-    static Rectangle slotFour = new Rectangle(16, 546+6, 32, 32);
-    static Rectangle slotFive = new Rectangle(52, 546+6, 32, 32);
-    static Rectangle slotSix = new Rectangle(88, 546+6, 32, 32);
+    static Rectangle slotFour = new Rectangle(16, 546 + 6, 32, 32);
+    static Rectangle slotFive = new Rectangle(52, 546 + 6, 32, 32);
+    static Rectangle slotSix = new Rectangle(88, 546 + 6, 32, 32);
 
     private static void renderWeaponSlots(Graphics graphics, Level level) {
         graphics.setColor(Color.black);
-        int x = 16, y = 510+5;
+        int x = 16, y = 510 + 5;
         for (int i = 0; i != 3; i++) {
-           graphics.drawImage(weapon_slot,x,y);
+            graphics.drawImage(weapon_slot, x, y);
             if (level.getPlayer().getWeapons().getWeapon(i) != null) {
                 Weapon weaponInSlot = level.getPlayer().getWeapons().getWeapon(i);
                 graphics.drawImage(weaponInSlot.getIcon().getScaledCopy(1.5f), x + 8, y);
-                if(weaponInSlot.getMaxCondition() != 0) {
+                if (weaponInSlot.getMaxCondition() != 0) {
                     float fillAmount = (weaponInSlot.getCondition() / weaponInSlot.getMaxCondition());
                     int pixelsToFill = (int) (32 * fillAmount);
                     graphics.setColor(Color.red);
                     graphics.fillRect(x, y + 24, pixelsToFill, 8);
                     graphics.setColor(Color.black);
                 }
-                if(weaponInSlot instanceof RangedWeapon){
+                if (weaponInSlot instanceof RangedWeapon) {
                     String ammoCount = level.getPlayer().ammo.get(((RangedWeapon) weaponInSlot).getProjectileType()) + "";
-                    if(!ammoCount.equalsIgnoreCase("null"))
-                    graphics.drawString( ammoCount,x,y+20);
+                    if (!ammoCount.equalsIgnoreCase("null"))
+                        graphics.drawString(ammoCount, x, y + 20);
                 }
                 if (level.getPlayer().selectedWeaponSlot == i) {
                     graphics.setColor(Color.red);
@@ -77,7 +89,7 @@ public class GUI {
             x += 36;
         }
         x = 16;
-        y = 546 + 5+1;
+        y = 546 + 5 + 1;
         for (int i = 3; i != 6; i++) {
             graphics.drawImage(weapon_slot, x, y);
             if (level.getPlayer().getWeapons().getWeapon(i) != null) {
@@ -88,8 +100,10 @@ public class GUI {
                 graphics.setColor(Color.red);
                 graphics.fillRect(x, y + 24, pixelsToFill, 8);
                 graphics.setColor(Color.black);
-                if(weaponInSlot instanceof RangedWeapon){
-                    graphics.drawString(level.getPlayer().ammo.get(((RangedWeapon)weaponInSlot).getProjectileType()) + "",x,y+20);
+                if (weaponInSlot instanceof RangedWeapon) {
+                    String ammoCount = level.getPlayer().ammo.get(((RangedWeapon) weaponInSlot).getProjectileType()) + "";
+                    if (!ammoCount.equalsIgnoreCase("null"))
+                        graphics.drawString(level.getPlayer().ammo.get(((RangedWeapon) weaponInSlot).getProjectileType()) + "", x, y + 20);
                 }
                 if (level.getPlayer().selectedWeaponSlot == i) {
                     graphics.setColor(Color.red);
@@ -107,11 +121,11 @@ public class GUI {
     public static boolean renderingWeaponOverlay = true;
     public static Weapon currentOverlay = null;
     static int width = 180;
-    static int height = 200;
+    static int height = 265;
     static int x = 400 - (width / 2);
     static int y = 300 - (height / 2);
 
-    static Rectangle closeButton = new Rectangle((x + width) - 32, y, 32, 32);
+    static Rectangle closeButton = new Rectangle(x, 405, width, 30);
     static Rectangle equipButton = new Rectangle(x, 335, width, 30);
     static Rectangle dropButton = new Rectangle(x, 370, width, 30);
 
@@ -123,31 +137,28 @@ public class GUI {
             renderingWeaponOverlay = false;
             return;
         }
-        graphics.fillRect(x, y, width, height);
+        graphics.drawImage(VIEW_WEAPON_BG,x, y);
         graphics.drawImage(selected.getSprite(), x, y);
         graphics.setColor(Color.black);
-        graphics.drawString(selected.getName(), x + 32, y);
+        graphics.drawString(selected.getName(), x + 42, y);
 
         graphics.drawString("Type: " + Weapon.getType(selected), x, y + 28);
         graphics.drawString("Damage: " + selected.getDamage(), x, y + 46);
-        graphics.drawString("Condition: " + calculatePercentage(selected) + "%", x, y + 64);
+        if (!(selected instanceof RangedWeapon))
+            graphics.drawString("Condition: " + calculatePercentage(selected) + "%", x, y + 64);
 
         if (selected instanceof MeleeWeapon) {
             MeleeWeapon meleeWeapon = (MeleeWeapon) selected;
             graphics.drawString("Attack range: " + meleeWeapon.getAttackRadius() / 64, x, y + 82);
+        } else if (selected instanceof RangedWeapon) {
+            RangedWeapon RangedWeapon = (RangedWeapon) selected;
+            graphics.drawString("Shot delay: " + RangedWeapon.getShotDelay(), x, y + 64);
         }
 
-        graphics.setColor(Color.red);
-        graphics.fillRect(x, 335, width, 30);
-        graphics.setColor(Color.black);
-        graphics.drawString("Equip weapon", x, 335);
 
-        graphics.setColor(Color.red);
-        graphics.fillRect(x, 370, width, 30);
-        graphics.setColor(Color.black);
-        graphics.drawString("Drop weapon", x, 370);
-
-        graphics.fillRect((x + width) - 32, y, 32, 32);
+        graphics.drawImage(EQUIP_BUTTON, x, 335);
+        graphics.drawImage(DROP_BUTTON, x, 370);
+        graphics.drawImage(BACK_BUTTON_SMALLER, x, 405);
     }
 
 
@@ -222,16 +233,16 @@ public class GUI {
                         level.getPlayer().getWeapons().setSlot(i, weapon);//TODO SOUND EFFECT IF CAN'T FIT
                         currentChest.removeItem(selected);
                     }
-                }else if(selected instanceof Ammo){
-                    Ammo ammo = (Ammo)selected;
-                    level.getPlayer().addAmmo(ammo.getAmount(),ammo.getType());
+                } else if (selected instanceof Ammo) {
+                    Ammo ammo = (Ammo) selected;
+                    level.getPlayer().addAmmo(ammo.getAmount(), ammo.getType());
                     currentChest.removeItem(selected);
                 }
                 return true;
             }
         }
         //272, 150 + 3 * 64, 256, 50
-        if(xx > 272 && yy > 150+3*64 && xx < 272+256 && yy <150+3*64 + 32){
+        if (xx > 272 && yy > 150 + 3 * 64 && xx < 272 + 256 && yy < 150 + 3 * 64 + 32) {
             currentChest = null;
             isRenderingChestGUI = false;
             return true;
@@ -257,7 +268,6 @@ public class GUI {
                 if (chest.getItem(x + y * columns) != null) {
                     Item item = chest.getItem(x + y * columns);
                     graphics.drawImage(item.getSprite().getScaledCopy(2f), 272 + (x * 64), 150 + (y * 64));
-                    //   graphics.drawString(item.getName(),200 + (x*100),150+64 + (y*100));
                 }
             }
         }
