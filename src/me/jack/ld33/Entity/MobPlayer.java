@@ -138,4 +138,13 @@ public class MobPlayer extends Mob {
             selectedWeaponSlot = pos;
         }
     }
+
+    public void addAmmo(int ammoToAdd, ProjectileType type){
+        if(ammo.containsKey(type)){
+            ammo.put(type,ammo.get(type)+ammoToAdd);
+        }else{
+            ammo.put(type,ammoToAdd);
+        }
+    }
+
 }

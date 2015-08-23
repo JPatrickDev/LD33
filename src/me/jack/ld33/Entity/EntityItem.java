@@ -1,5 +1,6 @@
 package me.jack.ld33.Entity;
 
+import me.jack.ld33.Item.Ammo;
 import me.jack.ld33.Item.Item;
 import me.jack.ld33.Item.Weapon;
 import me.jack.ld33.Level.Level;
@@ -28,8 +29,11 @@ public class EntityItem extends Entity {
                 if (level.getPlayer().canPickupWeapon((Weapon) item) != -1) {
                     level.getPlayer().getWeapons().setSlot(level.getPlayer().canPickupWeapon((Weapon) item), (Weapon) item);
                     level.entities.remove(this);
-                    System.out.println("Picked up");
                 }
+            } else if (item instanceof Ammo) {
+                Ammo ammo = (Ammo) item;
+                level.getPlayer().addAmmo(ammo.getAmount(),ammo.getType());
+                level.entities.remove(this);
             }
         }
     }

@@ -93,7 +93,7 @@ public class Level implements TileBasedMap {
     }
 
     public void render(Graphics g) {
-         //g.scale(0.15f,0.15f);
+        // g.scale(0.15f,0.15f);
         g.translate(-camera.x, -camera.y);
         for (int x = 0; x != levelTiles.length; x++) {
             for (int y = 0; y != levelTiles[0].length; y++) {
@@ -131,6 +131,10 @@ public class Level implements TileBasedMap {
     public void update(float delta) {
         camera.calculate(player.getX(), player.getY());
         for (Entity e : entities) {
+            if(e instanceof MobHuman){
+                if(!onScreen(e.getX(),e.getY()))
+                    continue;
+            }
             e.update(this, delta);
         }
         player.update(this, delta);
@@ -304,4 +308,5 @@ public class Level implements TileBasedMap {
         }
         return null;
     }
+
 }
