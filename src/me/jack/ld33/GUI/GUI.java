@@ -16,7 +16,6 @@ import java.awt.*;
 public class GUI {
 
 
-
     public static void renderHUD(Graphics graphics, Level level) {
         graphics.setColor(Color.white);
         graphics.fillRect(0, 500, 800, 100);
@@ -24,8 +23,8 @@ public class GUI {
 
         if (renderingWeaponOverlay)
             renderWeaponInfoOverlay(graphics, currentOverlay);
-        if(isRenderingChestGUI)
-            renderChestGUI(graphics,currentChest);
+        if (isRenderingChestGUI)
+            renderChestGUI(graphics, currentChest);
     }
 
     static Rectangle slotOne = new Rectangle(10, 510, 32, 32);
@@ -151,7 +150,7 @@ public class GUI {
             }
             return true;
         }
-        if (yy > 500) {
+        if (yy > 500 && !renderingWeaponOverlay) {
             if (slotOne.contains(xx, yy)) {
                 if (level.getPlayer().getWeapons().getWeapon(0) != null) {
                     currentOverlay = level.getPlayer().getWeapons().getWeapon(0);
@@ -186,29 +185,56 @@ public class GUI {
 
             return true;
         }
+        if (xx > 272 && yy > 150 && xx < 272 + 256 && yy < 150 + 192 && isRenderingChestGUI) {
+            System.out.println("Clicked inside chest");
+            int relX = (xx - 272) / 64;
+            int relY = (yy - 150) / 64;
+            Item selected = currentChest.getItem(relX + relY * 4);
+            if (selected != null) {
+                if (selected instanceof Weapon) {
+                    Weapon weapon = (Weapon) selected;
+                    int i = level.getPlayer().canPickupWeapon(weapon);
+                    if (i != -1) {
+                        level.getPlayer().getWeapons().setSlot(i, weapon);//TODO SOUND EFFECT IF CAN'T FIT
+                        currentChest.removeItem(selected);
+                    }
+                }
+            }
+        }
+        //272, 150 + 3 * 64, 256, 50
+        if(xx > 272 && yy > 150+3*64 && xx < 272+256 && yy < 200+(3*64)){
+            currentChest = null;
+            isRenderingChestGUI = false;
+        }
         return false;
     }
 
     private static int calculatePercentage(Weapon weapon) {
         return (int) ((weapon.getCondition() / weapon.getMaxCondition()) * 100);
     }
+
     public static Chest currentChest;
     public static boolean isRenderingChestGUI = false;
-    public static void renderChestGUI(Graphics graphics, Chest chest){
-        graphics.fillRect(200,150,400,300);
+
+    public static void renderChestGUI(Graphics graphics, Chest chest) {
+        graphics.fillRect(272, 150, 256, 192);
         int rows = 3;
         int columns = 4;
         graphics.setColor(Color.black);
-        for(int x = 0;x!= columns;x++){
-            for(int y = 0;y!= rows;y++){
-                graphics.drawRect(216 + (x*100),166 + (y*100),64,64);
-                if(chest.getItem(x+y*columns) != null){
-                    Item item = chest.getItem(x+y*columns);
-                    graphics.drawImage(item.getSprite().getScaledCopy(2f),216 + (x*100),166 + (y*100));
-                    graphics.drawString(item.getName(),216 + (x*100),166+64 + (y*100));
+        for (int x = 0; x != columns; x++) {
+            for (int y = 0; y != rows; y++) {
+                graphics.drawRect(272 + (x * 64), 150 + (y * 64), 64, 64);
+                if (chest.getItem(x + y * columns) != null) {
+                    Item item = chest.getItem(x + y * columns);
+                    graphics.drawImage(item.getSprite().getScaledCopy(2f), 272 + (x * 64), 150 + (y * 64));
+                    //   graphics.drawString(item.getName(),200 + (x*100),150+64 + (y*100));
                 }
             }
         }
+        graphics.setColor(Color.red);
+        graphics.fillRect(272, 150 + 3 * 64, 256, 50);
+        graphics.setColor(Color.black);
+        graphics.drawString("Exit chest",272,150+3*64);
         graphics.setColor(Color.white);
     }
 }

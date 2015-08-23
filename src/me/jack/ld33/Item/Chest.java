@@ -30,4 +30,8 @@ public class Chest {
     public Point getOwner() {
         return owner;
     }
+
+    public void removeItem(Item selected) {
+        items.remove(selected);
+    }
 }

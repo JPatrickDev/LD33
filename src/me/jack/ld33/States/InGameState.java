@@ -42,21 +42,24 @@ public class InGameState extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-        level.update(i);
-        if (level.getPlayer() != null) {
-            level.getPlayer().angle = (float) -(Math.atan2(level.getPlayer().getX() - (gameContainer.getInput().getMouseX() + level.camera.x), level.getPlayer().getY() - (gameContainer.getInput().getMouseY() + level.camera.y)) * 180 / Math.PI);
-        }
-        time += i;
 
-        if (time > 500) {
-            for (int x = 0; x != level.getWidth(); x++) {
-                for (int y = 0; y != level.getHeight(); y++) {
-                    if (level.getTileAt(x, y) == 1 && random.nextInt(500) == 0) {
-                        level.spawnHuman(x * 64, y * 64);
+        if(!GUI.isRenderingChestGUI && !GUI.renderingWeaponOverlay) {
+            level.update(i);
+            if (level.getPlayer() != null) {
+                level.getPlayer().angle = (float) -(Math.atan2(level.getPlayer().getX() - (gameContainer.getInput().getMouseX() + level.camera.x), level.getPlayer().getY() - (gameContainer.getInput().getMouseY() + level.camera.y)) * 180 / Math.PI);
+            }
+            time += i;
+
+            if (time > 500) {
+                for (int x = 0; x != level.getWidth(); x++) {
+                    for (int y = 0; y != level.getHeight(); y++) {
+                        if (level.getTileAt(x, y) == 1 && random.nextInt(500) == 0) {
+                            level.spawnHuman(x * 64, y * 64);
+                        }
                     }
                 }
+                time = 0;
             }
-            time = 0;
         }
 
     }
