@@ -2,6 +2,7 @@ package me.jack.ld33.GUI;
 
 import me.jack.ld33.Item.*;
 import me.jack.ld33.Level.Level;
+import me.jack.ld33.States.InGameState;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -16,6 +17,9 @@ public class GUI {
     public static void renderHUD(Graphics graphics, Level level) {
         graphics.setColor(Color.white);
         graphics.fillRect(0, 500, 800, 100);
+        graphics.setColor(Color.black);
+        graphics.drawString("Time left: " + InGameState.timeTaken / 1000, 600, 550);
+        graphics.setColor(Color.white);
         renderWeaponSlots(graphics, level);
 
         if (renderingWeaponOverlay)

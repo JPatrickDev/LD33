@@ -44,7 +44,7 @@ public class Level implements TileBasedMap {
 
     public Camera camera = new Camera(1000, 1000, 64, 800, 600);
 
-    MobPlayer player;
+    static MobPlayer player;
 
 
     public Level(int width, int height, int[][] tiles,int[][] topLayer) {
@@ -54,6 +54,10 @@ public class Level implements TileBasedMap {
         this.height = height;
         //  camera.calculate(30 * TILESIZE, 30 * TILESIZE);
     }
+
+    private int humansToSpawn = 0;
+
+    public static int humansKilled,batsKilled;
 
     public void postGeneration() {
         Random r = new Random();
@@ -66,17 +70,19 @@ public class Level implements TileBasedMap {
                 found = true;
             }
         }
-        player = new MobPlayer(x * TILESIZE, y * TILESIZE);
-        player.getWeapons().setSlot(0, new DaggerWeapon());
-        player.getWeapons().setSlot(1, new AxeWeapon());
-        player.getWeapons().setSlot(2, new PistolWeapon());
-        player.ammo.put(ProjectileType.SMALL_BULLET, 20);
-        player.getWeapons().setSlot(3, new MachineGunWeapon());
-        player.ammo.put(ProjectileType.BULLET, 200);
-        spawnHuman(player.getX(),player.getY());
+        if(player == null) {
+            player = new MobPlayer(x * TILESIZE, y * TILESIZE);
+            player.getWeapons().setSlot(0, new DaggerWeapon());
+            player.getWeapons().setSlot(1, new AxeWeapon());
+            player.getWeapons().setSlot(2, new PistolWeapon());
+            player.ammo.put(ProjectileType.SMALL_BULLET, 20);
+            player.getWeapons().setSlot(3, new MachineGunWeapon());
+            player.ammo.put(ProjectileType.BULLET, 200);
 
-
-
+        }else{
+            player.setX(x*TILESIZE);
+            player.setY(y*TILESIZE);
+        }
         for (int xx = 0; xx != width; xx++) {
             for (int yy = 0; yy != height; yy++) {
                 Tile tile = Tile.getTile(getTileAt(xx, yy));
@@ -129,13 +135,11 @@ public class Level implements TileBasedMap {
         g.resetTransform();
     }
 
+    public int humansAlive = 0;
     public void update(float delta) {
+
         camera.calculate(player.getX(), player.getY());
         for (Entity e : entities) {
-            if(e instanceof MobHuman){
-                if(!onScreen(e.getX(),e.getY()))
-                    continue;
-            }
             e.update(this, delta);
         }
         player.update(this, delta);
@@ -144,7 +148,20 @@ public class Level implements TileBasedMap {
               player.attack(this);
             }
         }
+        if(humansAlive < 300){
+            for(int x = 0; x != getWidth(); x++) {
+                for (int y = 0; y !=getHeight(); y++) {
+                    if (getTileAt(x, y) == 1 && MobHuman.random.nextInt(500) == 0) {
+                        spawnHuman(x * 64, y * 64);
+                    }
+                }
+            }
+        }
         particleSystem.update();
+    }
+
+    public void roundOver(){
+        entities.clear();
     }
 
     private boolean onScreen(int x, int y) {
@@ -250,8 +267,10 @@ public class Level implements TileBasedMap {
     }
 
     public void spawnHuman(int x, int y) {
-        System.out.println("Human Spawned");
+        if(onScreen(x,y))
+            return;
         entities.add(new MobHuman(x, y));
+        humansAlive++;
     }
 
     public MobPlayer getPlayer() {

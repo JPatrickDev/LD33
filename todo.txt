@@ -14,7 +14,7 @@ NPC
     - Bats/
     - Rats?
     - People
-        - Randomly generate different clothes colours for each person
+        - Few different versions of the texture, randomly select one for each human/
         - Personalities?
             - Some humans will attempt to fight back, others will run away?
 
@@ -75,7 +75,7 @@ Sound
 
 
 Misc
-    - Scoring system******
+    - Scoring system******/
     - Multiple levels
         - Slightly different art for each (Darker as you get deeper/Lava?)
     - Speedrunning?

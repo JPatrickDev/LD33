@@ -14,10 +14,8 @@ import uk.co.jdpatrick.JEngine.Image.ImageUtil;
 
 
 import java.awt.Point;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.security.SecureRandom;
+import java.util.*;
 
 /**
  * Created by Jack on 22/08/2015.
@@ -26,22 +24,26 @@ public class MobHuman extends Mob implements Mover {
 
     Human_Behaviour currentBehaviour = null;
 
-    public Image humanSprite;
+    public int spritePos;
+    public static ArrayList<Image> humanImages = new ArrayList<Image>();
     public static SpriteSheet humans = null;
 
     public MobHuman(int x, int y) {
         super(x, y, 32, 32);
-        if(humans == null){
+        if (humans == null) {
             try {
-                humans = new SpriteSheet("res/human_selection.png",32,32);
+                humans = new SpriteSheet("res/human_selection.png", 32, 32);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
+            for(int xx = 0;xx!= 2;xx++){
+                for(int yy = 0;yy!= 2;yy++){
+                    humanImages.add(humans.getSprite(xx,yy));
+                }
+            }
 
         }
-        int xPos = random.nextInt(2);
-        int yPos = random.nextInt(2);
-        humanSprite = humans.getSprite(xPos,yPos);
+        spritePos = random.nextInt(humanImages.size());
         currentBehaviour = Human_Behaviour.randomBehaviour();
         currentBehaviour = Human_Behaviour.FLEEING;
         this.health = 20f;
@@ -52,34 +54,36 @@ public class MobHuman extends Mob implements Mover {
     Path patrolPath = null;
 
 
-
-    private Color randColour(){
+    private Color randColour() {
         int r = random.nextInt(255);
         int g = random.nextInt(255);
         int b = random.nextInt(255);
-        return new Color(r,g,b);
+        return new Color(r, g, b);
     }
+
     int step = 1;
 
 
     Point movingTo;
     Path currentPath;
-    public static AStarPathFinder aStarPathFinder;
+    public
+    AStarPathFinder aStarPathFinder;
     public static Random random = new Random();
 
     @Override
     public void update(Level level, float delta) {
-
         if (health <= 0) {
             level.entities.remove(this);
             for (int i = 0; i != 25; i++)
                 level.particleSystem.addParticle(new SmallBloodParticle(getX(), getY()));
-            level.dropItem(new Ammo(ProjectileType.BULLET,10),getX(),getY());
+            level.dropItem(new Ammo(ProjectileType.BULLET, 10), getX(), getY());
+            level.humansAlive--;
+            level.humansKilled++;
             return;
         }
 
         if (aStarPathFinder == null)
-            aStarPathFinder = new AStarPathFinder(level, 100, true);
+            aStarPathFinder = new AStarPathFinder(level, 20, true);
         switch (currentBehaviour) {
             case STANDING:
                 break;
@@ -148,11 +152,10 @@ public class MobHuman extends Mob implements Mover {
                             currentPath = aStarPathFinder.findPath(this, getX() / 64, getY() / 64, rX, rY);
                         }
                     }
-                }else{
+                } else {
                     try {
                         moveToStep(currentPath.getStep(step), level);
-                        moveToStep(currentPath.getStep(step), level);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         movingTo = null;
                         currentPath = null;
                         step = 1;
@@ -179,7 +182,7 @@ public class MobHuman extends Mob implements Mover {
     }
 
     private void moveToStep(Path.Step nextStep, Level level) {
-        float xSpeed = ((nextStep.getX() * 64) - getX());
+      /*  float xSpeed = ((nextStep.getX() * 64) - getX());
         float ySpeed = ((nextStep.getY() * 64) - getY());
         float factor = (float) (4 / Math.sqrt(xSpeed * xSpeed + ySpeed * ySpeed));
         xSpeed *= factor;
@@ -192,10 +195,23 @@ public class MobHuman extends Mob implements Mover {
             movingTo = null;
             currentPath = null;
         }
-        if (random.nextInt(500) == 0) {
+        if (random.nextInt(250) == 0) {
             movingTo = null;
             currentPath = null;
             step = 1;
+        }*/
+        if (getX() > nextStep.getX() * 64) {
+            addX(-4);
+        }
+        if (getX() < nextStep.getX() * 64) {
+            addX(4);
+        }
+
+        if (getY() > nextStep.getY() * 64) {
+            addY(-4);
+        }
+        if (getY() < nextStep.getY() * 64) {
+            addY(4);
         }
         Rectangle nextStepRect = new Rectangle(nextStep.getX() * 64, nextStep.getY() * 64, 64, 64);
         if (new Rectangle(getX(), getY(), getWidth(), getHeight()).intersects(nextStepRect)) {
@@ -214,15 +230,15 @@ public class MobHuman extends Mob implements Mover {
             graphics.setColor(Color.white);
         }
 
-       /* if (currentPath != null)
+        /*if (currentPath != null)
             for (int i = 0; i != currentPath.getLength(); i++) {
                Path.Step step = currentPath.getStep(i);
                  graphics.fillRect(step.getX()*64,step.getY()*64,64,64);
           }
         if (movingTo != null)
             graphics.fillRect(movingTo.x, movingTo.y, 64, 64);
-     */
-        graphics.drawImage(humanSprite,getX(),getY());
+            */
+        graphics.drawImage(humanImages.get(spritePos), getX(), getY());
     }
 
 }

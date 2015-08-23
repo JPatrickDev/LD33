@@ -28,7 +28,17 @@ public class InGameState extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         Tile.initTiles();
         Weapon.init();
+    }
+
+    @Override
+    public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+        super.enter(container, game);
         level = LevelGenerator.generateLevel(50, 50, false);
+        time = 0;
+        timeTaken = 60000;
+        Level.humansKilled = 0;
+        Level.batsKilled = 0;
+
     }
 
     @Override
@@ -37,6 +47,12 @@ public class InGameState extends BasicGameState {
         GUI.renderHUD(graphics, level);
     }
 
+    @Override
+    public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+        super.leave(container, game);
+        level = null;
+        System.gc();
+    }
 
     long time = 0;
 
@@ -44,6 +60,7 @@ public class InGameState extends BasicGameState {
 
     public static int mX, mY;
 
+    public static long timeTaken = 60000;
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
 
@@ -53,21 +70,16 @@ public class InGameState extends BasicGameState {
 
         if (!GUI.isRenderingChestGUI && !GUI.renderingWeaponOverlay) {
             level.update(i);
+            timeTaken-=i;
             if (level.getPlayer() != null) {
                 level.getPlayer().angle = (float) -(Math.atan2(level.getPlayer().getX() - (gameContainer.getInput().getMouseX() + level.camera.x), level.getPlayer().getY() - (gameContainer.getInput().getMouseY() + level.camera.y)) * 180 / Math.PI);
             }
             time += i;
+        }
 
-            if (time > 10) {
-                for (int x = 0; x != level.getWidth(); x++) {
-                    for (int y = 0; y != level.getHeight(); y++) {
-                        if (level.getTileAt(x, y) == 1 && random.nextInt(500) == 0) {
-                            level.spawnHuman(x * 64, y * 64);
-                        }
-                    }
-                }
-                time = 0;
-            }
+        if(timeTaken<=0){
+            level.roundOver();
+           stateBasedGame.enterState(1);
         }
 
     }
