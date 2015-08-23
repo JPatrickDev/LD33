@@ -28,9 +28,9 @@ public class LevelGenerator {
             }
         }
         int[][] topLayer = new int[width][height];
-        Level level = new Level(width, height, tiles,topLayer);
+        Level level = new Level(width, height, tiles, topLayer);
 
-        placeRooms(level);
+        placeRooms(level, testing);
 
         outlineRoomsAndCorridors(level);
         if (!testing)
@@ -41,9 +41,10 @@ public class LevelGenerator {
 
     static Random r = new Random();
 
-    public static void placeRooms(Level level) {
+    public static void placeRooms(Level level, boolean testing) {
         ArrayList<Room> rooms = new ArrayList<Room>();
-        for (int i = 0; i != 10; i++) {
+        int attemptsToMake = r.nextInt(20) + 10;
+        for (int i = 0; i != attemptsToMake; i++) {
             int width = 5 + r.nextInt(8 - 4 + 1);
             int height = 5 + r.nextInt(8 - 4 + 1);
             int x = r.nextInt(level.getWidth() - width - 1) + 1;
@@ -57,7 +58,7 @@ public class LevelGenerator {
                 }
             }
             if (!failed) {
-                createRoom(room, level);
+                createRoom(room, level, testing);
                 rooms.add(room);
             }
         }
@@ -72,18 +73,22 @@ public class LevelGenerator {
         }
     }
 
-    private static void createRoom(Room room, Level level) {
+    private static void createRoom(Room room, Level level, boolean testing) {
         for (int x = room.getX(); x != room.getX() + room.getWidth(); x++) {
             for (int y = room.getY(); y != room.getY() + room.getHeight(); y++) {
                 level.setTileAt(x, y, 1);
-                if(MobHuman.random.nextInt(100) == 0) {
-                    Chest chest = new Chest(new Point(x,y));
-                    chest.addItem(new AxeWeapon());
-                    chest.addItem(new DaggerWeapon());
-                    level.chests.add(chest);
-                    level.setTopTileAt(x, y, 11);
-                }
             }
+        }
+
+        if (MobHuman.random.nextInt(2) == 0) {
+            Chest chest = new Chest(new Point(room.getCenter().x,room.getCenter().y));
+            if (!testing) {
+                chest.addItem(new AxeWeapon());
+                chest.addItem(new DaggerWeapon());
+            }
+            level.chests.add(chest);
+            level.setTopTileAt(room.getCenter().x,room.getCenter().y,11);
+
         }
     }
 
@@ -117,17 +122,17 @@ public class LevelGenerator {
         for (int x = 0; x != level.getWidth(); x++) {
             for (int y = 0; y != level.getHeight(); y++) {
                 if (level.getTileAt(x, y) == 1) {
-                    if(level.getTileAt(x+1,y+1)==2 && isCorner(x+1,y+1,level)){
-                        level.setTileAt(x+1,y+1,7);
+                    if (level.getTileAt(x + 1, y + 1) == 2 && isCorner(x + 1, y + 1, level)) {
+                        level.setTileAt(x + 1, y + 1, 7);
                     }
-                    if(level.getTileAt(x-1,y+1)==2 && isCorner(x-1,y+1,level)){
-                        level.setTileAt(x-1,y+1,8);
+                    if (level.getTileAt(x - 1, y + 1) == 2 && isCorner(x - 1, y + 1, level)) {
+                        level.setTileAt(x - 1, y + 1, 8);
                     }
-                    if(level.getTileAt(x-1,y-1) == 2 && isCorner(x-1,y-1,level)){
-                        level.setTileAt(x-1,y-1,9);
+                    if (level.getTileAt(x - 1, y - 1) == 2 && isCorner(x - 1, y - 1, level)) {
+                        level.setTileAt(x - 1, y - 1, 9);
                     }
-                    if(level.getTileAt(x+1,y-1) == 2 && isCorner(x+1,y-1,level)){
-                        level.setTileAt(x+1,y-1,10);
+                    if (level.getTileAt(x + 1, y - 1) == 2 && isCorner(x + 1, y - 1, level)) {
+                        level.setTileAt(x + 1, y - 1, 10);
                     }
                 }
             }
@@ -161,44 +166,44 @@ public class LevelGenerator {
 
     public static boolean isCorner(int x, int y, Level level) {
         int floorCount = 0;
-        int wallCount  = 0;
+        int wallCount = 0;
 
-        int top = level.getTileAt(x,y-1);
-        int topLeft = level.getTileAt(x-1,y-1);
-        int topRight = level.getTileAt(x+1,y-1);
+        int top = level.getTileAt(x, y - 1);
+        int topLeft = level.getTileAt(x - 1, y - 1);
+        int topRight = level.getTileAt(x + 1, y - 1);
 
-        int left = level.getTileAt(x-1,y);
-        int right = level.getTileAt(x+1,y);
+        int left = level.getTileAt(x - 1, y);
+        int right = level.getTileAt(x + 1, y);
 
-        int bottom = level.getTileAt(x,y+1);
-        int bottomLeft = level.getTileAt(x-1,y+1);
-        int bottomRight = level.getTileAt(x+1,y+1);
+        int bottom = level.getTileAt(x, y + 1);
+        int bottomLeft = level.getTileAt(x - 1, y + 1);
+        int bottomRight = level.getTileAt(x + 1, y + 1);
 
-        if(top == 1)floorCount++;
+        if (top == 1) floorCount++;
         else wallCount++;
 
-        if(topLeft == 1)floorCount++;
+        if (topLeft == 1) floorCount++;
         else wallCount++;
 
-        if(topRight == 1)floorCount++;
+        if (topRight == 1) floorCount++;
         else wallCount++;
 
-        if(left == 1)floorCount++;
+        if (left == 1) floorCount++;
         else wallCount++;
 
-        if(right == 1)floorCount++;
+        if (right == 1) floorCount++;
         else wallCount++;
 
-        if(bottom == 1)floorCount++;
+        if (bottom == 1) floorCount++;
         else wallCount++;
 
-        if(bottomLeft == 1)floorCount++;
+        if (bottomLeft == 1) floorCount++;
         else wallCount++;
 
-        if(bottomRight == 1)floorCount++;
+        if (bottomRight == 1) floorCount++;
         else wallCount++;
 
-        if(wallCount == 7 && floorCount == 1){
+        if (wallCount == 7 && floorCount == 1) {
             System.out.println("Found corner");
             return true;
         }
@@ -219,6 +224,24 @@ public class LevelGenerator {
             return 1;
         }
         return 0;
+    }
+
+    private static boolean touchingWall(int x, int y, Level level) {
+        int top = level.getTileAt(x, y - 1);
+        int left = level.getTileAt(x - 1, y);
+        int right = level.getTileAt(x + 1, y);
+        int bottom = level.getTileAt(x, y + 1);
+
+        return top != 1 || left != 1 || right != 1 || bottom != 1;
+    }
+
+    private static boolean surrounded(int x,int y,int i,Level level){
+        int top = level.getTileAt(x, y - 1);
+        int left = level.getTileAt(x - 1, y);
+        int right = level.getTileAt(x + 1, y);
+        int bottom = level.getTileAt(x, y + 1);
+
+        return top == i && left == i && right == i && bottom == i;
     }
 
     public static void main(String[] args) {
@@ -246,7 +269,7 @@ public class LevelGenerator {
                     if (p == 5) c = Color.green;
                     if (p == 6) c = Color.magenta;
                     if (p == 7 || p == 8 || p == 9 || p == 10) c = Color.pink;
-                    if(tp == 11)c = Color.orange;
+                    if (tp == 11) c = Color.orange;
                     pixels[x + y * w] = c.hashCode();
 
                 }

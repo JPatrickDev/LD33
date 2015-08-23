@@ -82,8 +82,8 @@ public class Level implements TileBasedMap {
     }
 
     public void render(Graphics g) {
-        // g.scale(2f,2f);
-        g.translate(-camera.x, -camera.y);
+         g.scale(0.15f,0.15f);
+        //g.translate(-camera.x, -camera.y);
         for (int x = 0; x != levelTiles.length; x++) {
             for (int y = 0; y != levelTiles[0].length; y++) {
                 int i = levelTiles[x][y];

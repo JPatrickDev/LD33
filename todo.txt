@@ -45,7 +45,7 @@ Combat
 
 Items
     - Chests in some rooms
-        - Chests will need an inventory and a GUI
+        - Chests will need an inventory and a GUI/
             - Contain coins, food, raw materials
                 - Rare weapons
                     - easter egg type weapons?
