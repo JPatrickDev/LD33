@@ -19,10 +19,14 @@ public class GUI {
 
     public static org.newdawn.slick.Image weapon_slot = null;
     public static Image HUD_BG = null;
+    public static Image CHEST_BG = null;
+    public static Image BACK_BUTTON = null;
     public static void renderHUD(Graphics graphics, Level level) {
         if(weapon_slot == null){
             weapon_slot = ImageUtil.loadImage("res/weapon_slot.png");
             HUD_BG = ImageUtil.loadImage("res/HUD_BG.png");
+            CHEST_BG = ImageUtil.loadImage("res/chest_background.png");
+            BACK_BUTTON = ImageUtil.loadImage("res/back_button.png");
         }
         graphics.setColor(Color.white);
         graphics.drawImage(HUD_BG,0,500);
@@ -223,12 +227,14 @@ public class GUI {
                     level.getPlayer().addAmmo(ammo.getAmount(),ammo.getType());
                     currentChest.removeItem(selected);
                 }
+                return true;
             }
         }
         //272, 150 + 3 * 64, 256, 50
-        if(xx > 272 && yy > 150+3*64 && xx < 272+256 && yy < 200+(3*64)){
+        if(xx > 272 && yy > 150+3*64 && xx < 272+256 && yy <150+3*64 + 32){
             currentChest = null;
             isRenderingChestGUI = false;
+            return true;
         }
         return false;
     }
@@ -241,7 +247,7 @@ public class GUI {
     public static boolean isRenderingChestGUI = false;
 
     public static void renderChestGUI(Graphics graphics, Chest chest) {
-        graphics.fillRect(272, 150, 256, 192);
+        graphics.drawImage(CHEST_BG, 272, 150);
         int rows = 3;
         int columns = 4;
         graphics.setColor(Color.black);
@@ -255,10 +261,7 @@ public class GUI {
                 }
             }
         }
-        graphics.setColor(Color.red);
-        graphics.fillRect(272, 150 + 3 * 64, 256, 50);
-        graphics.setColor(Color.black);
-        graphics.drawString("Exit chest",272,150+3*64);
+        graphics.drawImage(BACK_BUTTON, 272, 150 + 3 * 64);
         graphics.setColor(Color.white);
     }
 }
