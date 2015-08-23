@@ -43,20 +43,20 @@ public class MobPlayer extends Mob {
     public void update(Level level, float delta) {
 
         if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-            if (level.canMove(getX(), getY() - 8, getWidth(), getHeight()))
+            if (level.canMove(getX(), getY() - 8, getWidth(), getHeight(),this))
                 addY(-8);
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-            if (level.canMove(getX(), getY() + 8, getWidth(), getHeight()))
+            if (level.canMove(getX(), getY() + 8, getWidth(), getHeight(),this))
                 addY(8);
 
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-            if (level.canMove(getX() - 8, getY(), getWidth(), getHeight()))
+            if (level.canMove(getX() - 8, getY(), getWidth(), getHeight(),this))
                 addX(-8);
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-            if (level.canMove(getX() + 8, getY(), getWidth(), getHeight()))
+            if (level.canMove(getX() + 8, getY(), getWidth(), getHeight(),this))
                 addX(8);
         }
 
@@ -98,7 +98,7 @@ public class MobPlayer extends Mob {
     @Override
     public void render(Graphics graphics) {
         playerSprite.setRotation(angle);
-        graphics.fill(attackRadius);
+     //   graphics.fill(attackRadius);
         graphics.drawImage(playerSprite, getX(), getY());
 
 

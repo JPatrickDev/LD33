@@ -45,7 +45,7 @@ public class SmallBloodParticle extends Particle {
             ya = 0;
             return;
         }
-        if (system.level.canMove((int) (x + xa), (int) (y + ya), 4, 4)) {
+        if (system.level.canMove((int) (x + xa), (int) (y + ya), 4, 4,null)) {
             x += xa;
             y += ya;
         }

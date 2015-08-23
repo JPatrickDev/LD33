@@ -41,7 +41,7 @@ public class MobBat extends Mob {
             level.particleSystem.addParticle(new SmallBloodParticle(getX(),getY()));
             return;
         }
-        if(level.canMove((int)(getX()+xVel),(int)(getY()+yVel),getWidth(),getHeight())) {
+        if(level.canMove((int)(getX()+xVel),(int)(getY()+yVel),getWidth(),getHeight(),this)) {
             addX((int) xVel);
             addY((int) yVel);
         }else{

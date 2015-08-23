@@ -19,14 +19,54 @@ NPC
             - Some humans will attempt to fight back, others will run away?
 
 
+
 Combat
-    - Weapon items
-    - Equipped Slot
-    - Inventory
+    - Weapon items/
+    - Equipped Slot/
+    - Inventory/
         - Keyboard shortcuts to swap between weapons quickly?
-        - Can only carry a limited number of weapons
+        - Can only carry a limited number of weapons/
             - Can drop and pick weapons back up
                 - Any weapons you drop can be picked up by a aggressive human?
         - Clicking on a weapon slot brings up info about the weapon
             - Stats
             - Description
+
+
+- Weapons
+    - Dagger/
+    - Axe?
+    - Pistol
+    - Machine Gun
+    - Grenades
+    - Magic?
+    - Flamethrower? *********************************
+        - Particle effect
+
+Items
+    - Chests in some rooms
+        - Chests will need an inventory and a GUI
+            - Contain coins, food, raw materials
+                - Rare weapons
+                    - easter egg type weapons?
+    - Drops after kills
+        - Raw materials for repair
+        - Coins for upgrades?
+        - Food
+
+Graphics
+    - Art for humans
+    - Better floor, wall tiles
+    - finish the corners
+    - Proper GUI
+       - Polished and themed
+    - Any general graphical finishing touches(Window size?)
+
+Sound
+    - Nice sound effects for ALL weapons
+    - Menu sound?
+    - Death sounds
+    - Ambiance
+    - MUTE BUTTON EASY TO FIND
+    - Bg music if have time
+

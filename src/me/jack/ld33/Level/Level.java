@@ -2,6 +2,7 @@ package me.jack.ld33.Level;
 
 import me.jack.ld33.Entity.Entity;
 import me.jack.ld33.Entity.MobBat;
+import me.jack.ld33.Entity.MobHuman;
 import me.jack.ld33.Entity.MobPlayer;
 import me.jack.ld33.Item.Melee.DaggerWeapon;
 import me.jack.ld33.Level.Tile.Tile;
@@ -59,15 +60,17 @@ public class Level implements TileBasedMap {
         player = new MobPlayer(x * TILESIZE, y * TILESIZE);
         player.getWeapons().setSlot(0, new DaggerWeapon());
 
+
+
         for (int xx = 0; xx != width; xx++) {
             for (int yy = 0; yy != height; yy++) {
                 Tile tile = Tile.getTile(getTileAt(xx, yy));
                 if (tile.isSolid()) {
                     hitboxes.add(new Rectangle(xx * TILESIZE, yy * TILESIZE, TILESIZE, TILESIZE));
                 }else{
-                    if(getTileAt(xx,yy) == 1 && r.nextInt(100) == 0){
-                        for(int i = 0;i!= 5;i++){
-                            spawnBat(xx*TILESIZE,yy * TILESIZE);
+                    if(getTileAt(xx,yy) == 1 && r.nextInt(50) == 0){
+                        for(int i = 0;i!= 1;i++){
+                            spawnHuman(xx*TILESIZE,yy * TILESIZE);
                         }
                     }
                 }
@@ -89,7 +92,7 @@ public class Level implements TileBasedMap {
             }
         }
 
-        particleSystem.render(g,0,0);
+        particleSystem.render(g, 0, 0);
         for (Entity e : entities) {
             e.render(g);
         }
@@ -141,7 +144,6 @@ public class Level implements TileBasedMap {
     }
 
     public void setTileAt(int x, int y, int i) {
-
         try {
             this.levelTiles[x][y] = i;
         } catch (Exception e) {
@@ -150,7 +152,7 @@ public class Level implements TileBasedMap {
     }
 
 
-    public boolean canMove(int newX, int newY, int width, int height) {
+    public boolean canMove(int newX, int newY, int width, int height,Entity entity) {
         Rectangle rekt = new Rectangle(newX, newY, width, height);
         for (Rectangle rectangle : hitboxes) {
             if (rekt.intersects(rectangle)) return false;
@@ -187,7 +189,7 @@ public class Level implements TileBasedMap {
 
     @Override
     public boolean blocked(PathFindingContext pathFindingContext, int i, int i1) {
-        return false;
+        return getTileAt(i,i1) != 1;
     }
 
     @Override
@@ -209,6 +211,11 @@ public class Level implements TileBasedMap {
 
     public void spawnBat(int x,int y) {
         entities.add(new MobBat(x,y));
+    }
+
+    public void spawnHuman(int x,int y) {
+        System.out.println("Human Spawned");
+        entities.add(new MobHuman(x,y));
     }
 
     public MobPlayer getPlayer() {
