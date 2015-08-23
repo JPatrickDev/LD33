@@ -43,9 +43,9 @@ public class GUI {
         graphics.setColor(Color.white);
         graphics.drawImage(HUD_BG, 0, 500);
         graphics.setColor(Color.black);
-        graphics.drawString("Round: " + InGameState.numberOfRounds + " of 5",600,520);
+        graphics.drawString("Round: " + InGameState.numberOfRounds + " of 5", 600, 520);
         graphics.drawString("Time left: " + InGameState.timeTaken / 1000, 600, 540);
-        float toFill = (level.getPlayer().health/level.getPlayer().maxHealth);
+        float toFill = (level.getPlayer().health / level.getPlayer().maxHealth);
         graphics.setColor(Color.red.darker());
         graphics.fillRect(600, 560, 150, 10);
         graphics.setColor(Color.red);
@@ -242,16 +242,24 @@ public class GUI {
                     Ammo ammo = (Ammo) selected;
                     level.getPlayer().addAmmo(ammo.getAmount(), ammo.getType());
                     currentChest.removeItem(selected);
+                } else if (selected instanceof HealthBoost) {
+                    HealthBoost boost = (HealthBoost) selected;
+                    currentChest.removeItem(selected);
+                    level.getPlayer().addHealth(boost);
+
                 }
                 return true;
             }
         }
         //272, 150 + 3 * 64, 256, 50
-        if (xx > 272 && yy > 150 + 3 * 64 && xx < 272 + 256 && yy < 150 + 3 * 64 + 32) {
+        if (xx > 272 && yy > 150 + 3 * 64 && xx < 272 + 256 && yy < 150 + 3 * 64 + 32)
+
+        {
             currentChest = null;
             isRenderingChestGUI = false;
             return true;
         }
+
         return false;
     }
 

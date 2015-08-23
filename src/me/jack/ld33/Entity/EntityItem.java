@@ -1,6 +1,7 @@
 package me.jack.ld33.Entity;
 
 import me.jack.ld33.Item.Ammo;
+import me.jack.ld33.Item.HealthBoost;
 import me.jack.ld33.Item.Item;
 import me.jack.ld33.Item.Weapon;
 import me.jack.ld33.Level.Level;
@@ -34,6 +35,11 @@ public class EntityItem extends Entity {
                 Ammo ammo = (Ammo) item;
                 level.getPlayer().addAmmo(ammo.getAmount(),ammo.getType());
                 level.entities.remove(this);
+            }else if(item instanceof HealthBoost){
+                HealthBoost boost = (HealthBoost)item;
+                level.entities.remove(this);
+                level.getPlayer().addHealth(boost);
+
             }
         }
     }

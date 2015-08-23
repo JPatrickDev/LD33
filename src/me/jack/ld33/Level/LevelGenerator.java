@@ -3,6 +3,7 @@ package me.jack.ld33.Level;
 import me.jack.ld33.Entity.MobHuman;
 import me.jack.ld33.Item.Ammo;
 import me.jack.ld33.Item.Chest;
+import me.jack.ld33.Item.HealthBoost;
 import me.jack.ld33.Item.Melee.AxeWeapon;
 import me.jack.ld33.Item.Melee.DaggerWeapon;
 import me.jack.ld33.Item.Ranged.MachineGunWeapon;
@@ -97,6 +98,10 @@ public class LevelGenerator {
                     }
                     if (MobHuman.random.nextInt(2) == 0) {
                         chest.addItem(new MachineGunWeapon());
+                    }
+
+                    if(MobHuman.random.nextInt((5)) == 0){
+                        chest.addItem(new HealthBoost(MobHuman.random.nextInt(5)+5));
                     }
                 }
             }

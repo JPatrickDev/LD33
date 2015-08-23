@@ -15,8 +15,8 @@ NPC
     - Rats?
     - People
         - Few different versions of the texture, randomly select one for each human/
-        - Personalities?
-            - Some humans will attempt to fight back, others will run away?
+        - Personalities
+            - Some humans will attempt to fight back, others will run away/
 
 
 
@@ -87,7 +87,7 @@ Misc
         - Slightly different art for each (Darker as you get deeper/Lava?)
     - Reduce number of different Random objects
     - Remove System.out calls
-    - Checking if a tile = 1 is no longer enough to be sure it's an empty tile(Chests)
+    - Checking if a tile = 1 is no longer enough to be sure it's an empty tile(Chests)/
     - Slightly randomize the blood splat colours?
     - Cache the scaled item sprite when rendering chests GUI
     - Lighting?

@@ -1,10 +1,7 @@
 package me.jack.ld33.Entity;
 
-import me.jack.ld33.Item.MeleeWeapon;
+import me.jack.ld33.Item.*;
 import me.jack.ld33.Item.Ranged.ProjectileType;
-import me.jack.ld33.Item.RangedWeapon;
-import me.jack.ld33.Item.Weapon;
-import me.jack.ld33.Item.WeaponInventory;
 import me.jack.ld33.Level.Level;
 import me.jack.ld33.States.InGameState;
 import org.lwjgl.input.Keyboard;
@@ -29,7 +26,7 @@ public class MobPlayer extends Mob {
 
     public static Image playerSprite;
 
-    public HashMap<ProjectileType,Integer> ammo = new HashMap<ProjectileType, Integer>();
+    public HashMap<ProjectileType, Integer> ammo = new HashMap<ProjectileType, Integer>();
 
     public MobPlayer(int x, int y) {
         super(x, y, 32, 32);
@@ -85,13 +82,13 @@ public class MobPlayer extends Mob {
         }
         if (weapon instanceof MeleeWeapon)
             meleeAttack(level, (MeleeWeapon) weapon);
-        else if(weapon instanceof RangedWeapon){
-            rangedAttack(level,(RangedWeapon)weapon);
+        else if (weapon instanceof RangedWeapon) {
+            rangedAttack(level, (RangedWeapon) weapon);
         }
     }
 
     private void rangedAttack(Level level, RangedWeapon weapon) {
-        weapon.fire(InGameState.mX + level.camera.x,InGameState.mY + level.camera.y,level,this);
+        weapon.fire(InGameState.mX + level.camera.x, InGameState.mY + level.camera.y, level, this);
     }
 
 
@@ -140,12 +137,17 @@ public class MobPlayer extends Mob {
         }
     }
 
-    public void addAmmo(int ammoToAdd, ProjectileType type){
-        if(ammo.containsKey(type)){
-            ammo.put(type,ammo.get(type)+ammoToAdd);
-        }else{
-            ammo.put(type,ammoToAdd);
+    public void addAmmo(int ammoToAdd, ProjectileType type) {
+        if (ammo.containsKey(type)) {
+            ammo.put(type, ammo.get(type) + ammoToAdd);
+        } else {
+            ammo.put(type, ammoToAdd);
         }
     }
 
+    public void addHealth(HealthBoost boost) {
+        health += boost.getAmount();
+        if (health > maxHealth)
+            health = maxHealth;
+    }
 }

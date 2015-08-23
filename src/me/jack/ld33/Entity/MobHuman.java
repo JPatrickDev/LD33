@@ -1,6 +1,7 @@
 package me.jack.ld33.Entity;
 
 import me.jack.ld33.Item.Ammo;
+import me.jack.ld33.Item.HealthBoost;
 import me.jack.ld33.Item.Melee.AxeWeapon;
 import me.jack.ld33.Item.Ranged.HumanPistolWeapon;
 import me.jack.ld33.Item.Ranged.PistolWeapon;
@@ -88,6 +89,9 @@ public class MobHuman extends Mob implements Mover {
                 level.particleSystem.addParticle(new SmallBloodParticle(getX(), getY()));
             if(random.nextInt(10) == 0)
             level.dropItem(new Ammo(ProjectileType.randomProjectile(), random.nextInt(10) + 20), getX(), getY());
+            if(random.nextInt(50) == 0){
+                level.dropItem(new HealthBoost(random.nextInt(15) + 5),getX(),getY());
+            }
             level.humansAlive--;
             level.humansKilled++;
             return;
