@@ -37,6 +37,7 @@ public class MobBat extends Mob {
     public void update(Level level, float delta) {
         if(health <= 0){
             level.entities.remove(this);
+            Level.batsKilled++;
             for(int i = 0;i!= 25;i++)
             level.particleSystem.addParticle(new SmallBloodParticle(getX(),getY()));
             return;

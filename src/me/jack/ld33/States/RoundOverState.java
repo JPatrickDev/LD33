@@ -30,7 +30,7 @@ public class RoundOverState extends BasicGameState{
 
         //TODO Center all this
         graphics.drawString("ROUND OVER",50,50);
-        graphics.drawString("You killed " + Level.humansKilled + " humans, YYY bats and ZZZ rats",50,65);
+        graphics.drawString("You killed " + Level.humansKilled + " humans and " + Level.batsKilled + " bats",50,65);
         graphics.drawString("NEXT ROUND STARTS IN: " + wait/1000,50,80);
 
     }

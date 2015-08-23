@@ -1,9 +1,6 @@
 package me.jack.ld33.Item;
 
-import me.jack.ld33.Entity.Entity;
-import me.jack.ld33.Entity.Mob;
-import me.jack.ld33.Entity.MobHuman;
-import me.jack.ld33.Entity.MobPlayer;
+import me.jack.ld33.Entity.*;
 import me.jack.ld33.Item.Ranged.ProjectileType;
 import me.jack.ld33.Level.Level;
 import org.newdawn.slick.*;
@@ -99,12 +96,12 @@ class Projectile extends Entity {
 
         Rectangle me = new Rectangle(getX(), getY(), getWidth(), getHeight());
         for (Entity e : level.entities) {
-            if (!(e instanceof MobHuman)) continue;
+            if (!(e instanceof MobHuman) && !(e instanceof MobBat)) continue;
 
             Rectangle hRect = new Rectangle(e.getX(), e.getY(), e.getWidth(), e.getHeight());
             if(me.intersects(hRect)){
-                MobHuman mh = (MobHuman) e;
-                mh.health-= type.getDamage();
+                Mob mob= (Mob) e;
+                mob.health-= type.getDamage();
                 level.entities.remove(this);
             }
         }

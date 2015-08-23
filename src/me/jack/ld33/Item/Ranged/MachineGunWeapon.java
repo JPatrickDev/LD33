@@ -9,7 +9,5 @@ import org.newdawn.slick.Image;
 public class MachineGunWeapon extends RangedWeapon{
     public MachineGunWeapon() {
         super(weaponIcons.getSprite(1,1),weaponSprites.getSprite(1,1), "Machine Gun",50, ProjectileType.BULLET);
-        setCondition(750f);
-        setMaxCondition(750f);
     }
 }

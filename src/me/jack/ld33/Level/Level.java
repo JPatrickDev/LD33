@@ -91,6 +91,11 @@ public class Level implements TileBasedMap {
                             spawnHuman(xx * TILESIZE, yy * TILESIZE);
                         }
                     }
+                    if(r.nextInt(100) == 0){
+                        for(int i = 0;i!= 5;i++){
+                            spawnBat(xx*TILESIZE,yy*TILESIZE);
+                        }
+                    }
                 }
             }
         }
