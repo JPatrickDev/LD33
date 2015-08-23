@@ -82,7 +82,7 @@ Sound
 
 
 Misc
-    - Scoring system******/
+    - Scoring system/
     - Multiple levels
         - Slightly different art for each (Darker as you get deeper/Lava?)
     - Reduce number of different Random objects
