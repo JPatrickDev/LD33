@@ -48,7 +48,7 @@ public class Level implements TileBasedMap {
     static MobPlayer player;
 
 
-    public Level(int width, int height, int[][] tiles,int[][] topLayer) {
+    public Level(int width, int height, int[][] tiles, int[][] topLayer) {
         this.levelTiles = tiles;
         this.topLayer = topLayer;
         this.width = width;
@@ -58,7 +58,7 @@ public class Level implements TileBasedMap {
 
     private int humansToSpawn = 0;
 
-    public static int humansKilled,batsKilled;
+    public static int humansKilled, batsKilled;
 
     public void postGeneration() {
         Random r = new Random();
@@ -71,14 +71,14 @@ public class Level implements TileBasedMap {
                 found = true;
             }
         }
-        if(player == null) {
+        if (player == null) {
             player = new MobPlayer(x * TILESIZE, y * TILESIZE);
             player.getWeapons().setSlot(0, new DaggerWeapon());
             player.getWeapons().setSlot(1, new FlameThrowerWeapon());
-            player.addAmmo(100,ProjectileType.FIRE);
-        }else{
-            player.setX(x*TILESIZE);
-            player.setY(y*TILESIZE);
+            player.addAmmo(100, ProjectileType.FIRE);
+        } else {
+            player.setX(x * TILESIZE);
+            player.setY(y * TILESIZE);
         }
         for (int xx = 0; xx != width; xx++) {
             for (int yy = 0; yy != height; yy++) {
@@ -91,9 +91,9 @@ public class Level implements TileBasedMap {
                             spawnHuman(xx * TILESIZE, yy * TILESIZE);
                         }
                     }
-                    if(r.nextInt(100) == 0){
-                        for(int i = 0;i!= 5;i++){
-                            spawnBat(xx*TILESIZE,yy*TILESIZE);
+                    if (r.nextInt(100) == 0) {
+                        for (int i = 0; i != 5; i++) {
+                            spawnBat(xx * TILESIZE, yy * TILESIZE);
                         }
                     }
                 }
@@ -121,10 +121,10 @@ public class Level implements TileBasedMap {
                 //      if((x*TILESIZE) <0 || (x*TILESIZE) > 832)continue;
                 // if((y*TILESIZE) <0 || (y*TILESIZE) > 632) continue;
 
-                if(i == 0)
+                if (i == 0)
                     continue;
                 if (onScreen(x * TILESIZE, y * TILESIZE))
-                tile.render((x) * TILESIZE, (y) * TILESIZE, g);
+                    tile.render((x) * TILESIZE, (y) * TILESIZE, g);
             }
         }
 
@@ -138,6 +138,7 @@ public class Level implements TileBasedMap {
     }
 
     public int humansAlive = 0;
+
     public void update(float delta) {
 
         camera.calculate(player.getX(), player.getY());
@@ -145,15 +146,15 @@ public class Level implements TileBasedMap {
             e.update(this, delta);
         }
         player.update(this, delta);
-        if(Mouse.isButtonDown(0)){
-            if(player.getWeapons().getWeapon(player.selectedWeaponSlot) instanceof MachineGunWeapon || player.getWeapons().getWeapon(player.selectedWeaponSlot) instanceof FlameThrowerWeapon){
-              player.attack(this);
+        if (Mouse.isButtonDown(0)) {
+            if (player.getWeapons().getWeapon(player.selectedWeaponSlot) instanceof MachineGunWeapon || player.getWeapons().getWeapon(player.selectedWeaponSlot) instanceof FlameThrowerWeapon) {
+                player.attack(this);
             }
         }
-        if(humansAlive < 300){
-            for(int x = 0; x != getWidth(); x++) {
-                for (int y = 0; y !=getHeight(); y++) {
-                    if (getTileAt(x, y) == 1 && MobHuman.random.nextInt(500) == 0) {
+        if (humansAlive < 300) {
+            for (int x = 0; x != getWidth(); x++) {
+                for (int y = 0; y != getHeight(); y++) {
+                    if (getTileAt(x, y) == 1 && MobHuman.random.nextInt(500) == 0 && getTopTileAt(x, y) == 0) {
                         spawnHuman(x * 64, y * 64);
                     }
                 }
@@ -162,7 +163,7 @@ public class Level implements TileBasedMap {
         particleSystem.update();
     }
 
-    public void roundOver(){
+    public void roundOver() {
         entities.clear();
     }
 
@@ -269,7 +270,7 @@ public class Level implements TileBasedMap {
     }
 
     public void spawnHuman(int x, int y) {
-        if(onScreen(x,y))
+        if (onScreen(x, y))
             return;
         entities.add(new MobHuman(x, y));
         humansAlive++;
@@ -287,19 +288,19 @@ public class Level implements TileBasedMap {
         entities.add(new EntityItem(x, y, item));
     }
 
-    public void playerDropItem(Item item){
-        int tX = getPlayer().getX()/64;
-        int tY = getPlayer().getY()/64;
+    public void playerDropItem(Item item) {
+        int tX = getPlayer().getX() / 64;
+        int tY = getPlayer().getY() / 64;
         ArrayList<Point> possibleDrops = new ArrayList<Point>();
 
-        if(getTileAt(tX - 1,tY) == 1)
-            possibleDrops.add(new Point(tX-1,tY));
-        if(getTileAt(tX + 1,tY) == 1)
-            possibleDrops.add(new Point(tX+1,tY));
-        if(getTileAt(tX,tY-1) == 1)
-            possibleDrops.add(new Point(tX,tY-1));
-        if(getTileAt(tX,tY+1) == 1)
-            possibleDrops.add(new Point(tX,tY+1));
+        if (getTileAt(tX - 1, tY) == 1)
+            possibleDrops.add(new Point(tX - 1, tY));
+        if (getTileAt(tX + 1, tY) == 1)
+            possibleDrops.add(new Point(tX + 1, tY));
+        if (getTileAt(tX, tY - 1) == 1)
+            possibleDrops.add(new Point(tX, tY - 1));
+        if (getTileAt(tX, tY + 1) == 1)
+            possibleDrops.add(new Point(tX, tY + 1));
 
         Point dropPoint = possibleDrops.get(MobHuman.random.nextInt(possibleDrops.size()));
         dropItem(item, dropPoint.x * 64, dropPoint.y * 64);
@@ -322,9 +323,9 @@ public class Level implements TileBasedMap {
         }
     }
 
-    public Chest getChestAt(int x,int y){
-        for(Chest chest : chests){
-            if(chest.getOwner().x == x && chest.getOwner().y == y){
+    public Chest getChestAt(int x, int y) {
+        for (Chest chest : chests) {
+            if (chest.getOwner().x == x && chest.getOwner().y == y) {
                 return chest;
             }
         }

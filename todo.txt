@@ -40,8 +40,9 @@ Combat
     - Machine Gun/
     - Grenades
     - Magic?
-    - Flamethrower? *********************************
-        - Particle effect
+    - Flamethrower?/
+        - Particle effect/
+            - Random wobble to projectile movment/
 
 Items
     - Chests in some rooms/
@@ -63,6 +64,9 @@ Graphics
     - finish the corners
     - Proper GUI
        - Polished and themed
+    - Player facing different dirrections
+        - Running animation?
+    - Weapon info page for ranged guns doesn't need to display condition and does not show damage
     - Any general graphical finishing touches(Window size?)
 
 Sound

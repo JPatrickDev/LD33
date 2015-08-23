@@ -1,6 +1,8 @@
 package me.jack.ld33;
 
+import me.jack.ld33.States.GameOverState;
 import me.jack.ld33.States.InGameState;
+import me.jack.ld33.States.MainMenuState;
 import me.jack.ld33.States.RoundOverState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -21,6 +23,8 @@ public class LD33Game extends StateBasedGame {
         gameContainer.setAlwaysRender(true);
 
         this.addState(new InGameState());
+        this.addState(new MainMenuState());
+        this.addState(new GameOverState());
         this.addState(new RoundOverState());
     }
 }

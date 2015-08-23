@@ -103,7 +103,7 @@ public class MobPlayer extends Mob {
                 ((Mob) e).health -= meleeWeapon.getDamage();
             }
         }
-        if (meleeWeapon.getCondition() <= 0) {
+        if (meleeWeapon.getCondition() <= 0 && meleeWeapon.getMaxCondition() != 0) {
             weaponInventory.setSlot(selectedWeaponSlot, null);
         }
     }

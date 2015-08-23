@@ -6,6 +6,7 @@ import me.jack.ld33.States.InGameState;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import uk.co.jdpatrick.JEngine.Image.ImageUtil;
 
 import java.awt.*;
@@ -17,12 +18,14 @@ public class GUI {
 
 
     public static org.newdawn.slick.Image weapon_slot = null;
+    public static Image HUD_BG = null;
     public static void renderHUD(Graphics graphics, Level level) {
         if(weapon_slot == null){
             weapon_slot = ImageUtil.loadImage("res/weapon_slot.png");
+            HUD_BG = ImageUtil.loadImage("res/HUD_BG.png");
         }
         graphics.setColor(Color.white);
-        graphics.fillRect(0, 500, 800, 100);
+        graphics.drawImage(HUD_BG,0,500);
         graphics.setColor(Color.black);
         graphics.drawString("Time left: " + InGameState.timeTaken / 1000, 600, 550);
         graphics.setColor(Color.white);
@@ -34,26 +37,28 @@ public class GUI {
             renderChestGUI(graphics, currentChest);
     }
 
-    static Rectangle slotOne = new Rectangle(10, 510, 32, 32);
-    static Rectangle slotTwo = new Rectangle(46, 510, 32, 32);
-    static Rectangle slotThree = new Rectangle(82, 510, 32, 32);
-    static Rectangle slotFour = new Rectangle(10, 546, 32, 32);
-    static Rectangle slotFive = new Rectangle(46, 546, 32, 32);
-    static Rectangle slotSix = new Rectangle(82, 546, 32, 32);
+    static Rectangle slotOne = new Rectangle(16, 515, 32, 32);
+    static Rectangle slotTwo = new Rectangle(52, 515, 32, 32);
+    static Rectangle slotThree = new Rectangle(88, 515, 32, 32);
+    static Rectangle slotFour = new Rectangle(16, 546+6, 32, 32);
+    static Rectangle slotFive = new Rectangle(52, 546+6, 32, 32);
+    static Rectangle slotSix = new Rectangle(88, 546+6, 32, 32);
 
     private static void renderWeaponSlots(Graphics graphics, Level level) {
         graphics.setColor(Color.black);
-        int x = 10, y = 510;
+        int x = 16, y = 510+5;
         for (int i = 0; i != 3; i++) {
            graphics.drawImage(weapon_slot,x,y);
             if (level.getPlayer().getWeapons().getWeapon(i) != null) {
                 Weapon weaponInSlot = level.getPlayer().getWeapons().getWeapon(i);
                 graphics.drawImage(weaponInSlot.getIcon().getScaledCopy(1.5f), x + 8, y);
-                float fillAmount = (weaponInSlot.getCondition() / weaponInSlot.getMaxCondition());
-                int pixelsToFill = (int) (32 * fillAmount);
-                graphics.setColor(Color.red);
-                graphics.fillRect(x, y + 24, pixelsToFill, 8);
-                graphics.setColor(Color.black);
+                if(weaponInSlot.getMaxCondition() != 0) {
+                    float fillAmount = (weaponInSlot.getCondition() / weaponInSlot.getMaxCondition());
+                    int pixelsToFill = (int) (32 * fillAmount);
+                    graphics.setColor(Color.red);
+                    graphics.fillRect(x, y + 24, pixelsToFill, 8);
+                    graphics.setColor(Color.black);
+                }
                 if(weaponInSlot instanceof RangedWeapon){
                     String ammoCount = level.getPlayer().ammo.get(((RangedWeapon) weaponInSlot).getProjectileType()) + "";
                     if(!ammoCount.equalsIgnoreCase("null"))
@@ -67,8 +72,8 @@ public class GUI {
             }
             x += 36;
         }
-        x = 10;
-        y = 546;
+        x = 16;
+        y = 546 + 5+1;
         for (int i = 3; i != 6; i++) {
             graphics.drawImage(weapon_slot, x, y);
             if (level.getPlayer().getWeapons().getWeapon(i) != null) {

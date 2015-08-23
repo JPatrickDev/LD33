@@ -23,6 +23,7 @@ public class InGameState extends BasicGameState {
 
     Level level;
 
+    public static int totalHumanKills = 0,totalBatKills = 0;
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {

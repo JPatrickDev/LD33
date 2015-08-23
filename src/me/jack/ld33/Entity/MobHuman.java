@@ -202,17 +202,42 @@ public class MobHuman extends Mob implements Mover {
             step = 1;
         }*/
         if (getX() > nextStep.getX() * 64) {
+            if(level.canMove(getX()-4,getY(),getWidth(),getHeight(),this))
             addX(-4);
+            else {
+                step = 1;
+                currentPath = null;
+                movingTo = null;
+            }
+
         }
         if (getX() < nextStep.getX() * 64) {
+            if(level.canMove(getX()+4,getY(),getWidth(),getHeight(),this))
             addX(4);
+            else {
+                step = 1;
+                currentPath = null;
+                movingTo = null;
+            }
         }
 
         if (getY() > nextStep.getY() * 64) {
+            if(level.canMove(getX(),getY()-4,getWidth(),getHeight(),this))
             addY(-4);
+            else {
+                step = 1;
+                currentPath = null;
+                movingTo = null;
+            }
         }
         if (getY() < nextStep.getY() * 64) {
+            if(level.canMove(getX(),getY()+4,getWidth(),getHeight(),this))
             addY(4);
+            else {
+                step = 1;
+                currentPath = null;
+                movingTo = null;
+            }
         }
         Rectangle nextStepRect = new Rectangle(nextStep.getX() * 64, nextStep.getY() * 64, 64, 64);
         if (new Rectangle(getX(), getY(), getWidth(), getHeight()).intersects(nextStepRect)) {
