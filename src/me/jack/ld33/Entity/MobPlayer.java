@@ -8,15 +8,11 @@ import me.jack.ld33.Item.WeaponInventory;
 import me.jack.ld33.Level.Level;
 import me.jack.ld33.States.InGameState;
 import org.lwjgl.input.Keyboard;
-import org.newdawn.slick.*;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Circle;
-import org.newdawn.slick.geom.Vector2f;
 import uk.co.jdpatrick.JEngine.Image.ImageUtil;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,7 +21,8 @@ import java.util.HashMap;
  */
 public class MobPlayer extends Mob {
 
-    Circle attackRadius;
+    Circle attractRadius;
+    Circle stopRadius;
 
     WeaponInventory weaponInventory = new WeaponInventory();
     public int selectedWeaponSlot = 0;
@@ -41,7 +38,9 @@ public class MobPlayer extends Mob {
             playerSprite.setCenterOfRotation(16, 16);
         }
         this.health = 50f;
-        attackRadius = new Circle(x, y, 64f);
+        this.maxHealth = 50f;
+        attractRadius = new Circle(x, y, 256f);
+        stopRadius = new Circle(x, y, 128f);
     }
 
 
@@ -69,8 +68,10 @@ public class MobPlayer extends Mob {
         }
 
 
-        attackRadius.setCenterX(getX() + getWidth() / 2);
-        attackRadius.setCenterY(getY() + getHeight() / 2);
+        attractRadius.setCenterX(getX() + getWidth() / 2);
+        attractRadius.setCenterY(getY() + getHeight() / 2);
+        stopRadius.setCenterX(getX() + getWidth() / 2);
+        stopRadius.setCenterY(getY() + getHeight() / 2);
 
     }
 
@@ -96,8 +97,8 @@ public class MobPlayer extends Mob {
 
     private void meleeAttack(Level level, MeleeWeapon meleeWeapon) {
         meleeWeapon.setCondition(meleeWeapon.getCondition() - 1);
-        attackRadius.setRadius(meleeWeapon.getAttackRadius());
-        ArrayList<Entity> inRange = level.entitiesInShape(attackRadius);
+        attractRadius.setRadius(meleeWeapon.getAttackRadius());
+        ArrayList<Entity> inRange = level.entitiesInShape(attractRadius);
         for (Entity e : inRange) {
             if (e instanceof Mob) {
                 ((Mob) e).health -= meleeWeapon.getDamage();
@@ -111,7 +112,7 @@ public class MobPlayer extends Mob {
 
     @Override
     public void render(Graphics graphics) {
-        //   graphics.fill(attackRadius);
+        //   graphics.fill(attractRadius);
         graphics.drawImage(playerSprite, getX(), getY());
 
 

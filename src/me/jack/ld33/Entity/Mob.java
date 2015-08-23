@@ -5,7 +5,7 @@ package me.jack.ld33.Entity;
  */
 public abstract class Mob extends Entity{
 
-    public float health = 0;
+    public float health = 0,maxHealth = 0;
     public Mob(int x, int y, int width, int height) {
         super(x, y, width, height);
     }

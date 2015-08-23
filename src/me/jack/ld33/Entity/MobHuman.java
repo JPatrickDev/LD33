@@ -2,6 +2,8 @@ package me.jack.ld33.Entity;
 
 import me.jack.ld33.Item.Ammo;
 import me.jack.ld33.Item.Melee.AxeWeapon;
+import me.jack.ld33.Item.Ranged.HumanPistolWeapon;
+import me.jack.ld33.Item.Ranged.PistolWeapon;
 import me.jack.ld33.Item.Ranged.ProjectileType;
 import me.jack.ld33.Level.Level;
 import me.jack.ld33.Particles.SmallBloodParticle;
@@ -28,6 +30,9 @@ public class MobHuman extends Mob implements Mover {
     public static ArrayList<Image> humanImages = new ArrayList<Image>();
     public static SpriteSheet humans = null;
 
+    private boolean aggressive = false;
+
+    private HumanPistolWeapon weapon;
     public MobHuman(int x, int y) {
         super(x, y, 32, 32);
         if (humans == null) {
@@ -47,6 +52,11 @@ public class MobHuman extends Mob implements Mover {
         currentBehaviour = Human_Behaviour.randomBehaviour();
         currentBehaviour = Human_Behaviour.FLEEING;
         this.health = 20f;
+        this.maxHealth = 20f;
+        if(random.nextInt(3) == 0) {
+            weapon = new HumanPistolWeapon();
+            aggressive = true;
+        }
     }
 
     Point patrol1, patrol2;
@@ -81,6 +91,35 @@ public class MobHuman extends Mob implements Mover {
             level.humansAlive--;
             level.humansKilled++;
             return;
+        }
+
+        if(aggressive){
+
+            Rectangle me = new Rectangle(getX(),getY(),getWidth(),getHeight());
+            if(me.intersects(level.getPlayer().attractRadius)){
+                if(random.nextInt(35) == 0){
+                    weapon.fire(level.getPlayer().getX(),level.getPlayer().getY(),level,this);
+                }
+                if(!me.intersects(level.getPlayer().stopRadius)) {
+                    if (getX() > level.getPlayer().getX()) {
+                        if(level.canMove(getX() -4,getY(),getWidth(),getHeight(),this))
+                        addX(-4);
+                    }
+                    if (getX() < level.getPlayer().getX()) {
+                        if(level.canMove(getX()+ 4,getY(),getWidth(),getHeight(),this))
+                        addX(4);
+                    }
+                    if (getY() > level.getPlayer().getY()) {
+                        if(level.canMove(getX(),getY() -4,getWidth(),getHeight(),this))
+                        addY(-4);
+                    }
+                    if (getY() < level.getPlayer().getY()) {
+                        if(level.canMove(getX(),getY() + 4,getWidth(),getHeight(),this))
+                        addY(4);
+                    }
+                }
+                return;
+            }
         }
 
         if (aStarPathFinder == null)
@@ -267,11 +306,6 @@ public class MobHuman extends Mob implements Mover {
         graphics.drawImage(humanImages.get(spritePos), getX(), getY());
     }
 
-}
-
-
-enum Human_Personality {
-    NEUTRAL, AGGRESSIVE, SCARED;
 }
 
 enum Human_Behaviour {

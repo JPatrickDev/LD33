@@ -43,10 +43,15 @@ public class GUI {
         graphics.setColor(Color.white);
         graphics.drawImage(HUD_BG, 0, 500);
         graphics.setColor(Color.black);
-        graphics.drawString("Time left: " + InGameState.timeTaken / 1000, 600, 550);
+        graphics.drawString("Round: " + InGameState.numberOfRounds + " of 5",600,520);
+        graphics.drawString("Time left: " + InGameState.timeTaken / 1000, 600, 540);
+        float toFill = (level.getPlayer().health/level.getPlayer().maxHealth);
+        graphics.setColor(Color.red.darker());
+        graphics.fillRect(600, 560, 150, 10);
+        graphics.setColor(Color.red);
+        graphics.fillRect(600, 560, 150 * toFill, 10);
         graphics.setColor(Color.white);
         renderWeaponSlots(graphics, level);
-
         if (renderingWeaponOverlay)
             renderWeaponInfoOverlay(graphics, currentOverlay);
         if (isRenderingChestGUI)
@@ -137,7 +142,7 @@ public class GUI {
             renderingWeaponOverlay = false;
             return;
         }
-        graphics.drawImage(VIEW_WEAPON_BG,x, y);
+        graphics.drawImage(VIEW_WEAPON_BG, x, y);
         graphics.drawImage(selected.getSprite(), x, y);
         graphics.setColor(Color.black);
         graphics.drawString(selected.getName(), x + 42, y);

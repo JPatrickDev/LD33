@@ -164,6 +164,8 @@ public class Level implements TileBasedMap {
     }
 
     public void roundOver() {
+        InGameState.totalHumanKills += humansKilled;
+        InGameState.totalBatKills += batsKilled;
         entities.clear();
     }
 

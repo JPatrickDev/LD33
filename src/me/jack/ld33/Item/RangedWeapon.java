@@ -19,7 +19,7 @@ public class RangedWeapon extends Weapon {
     private long lastShot;
     private int shotDelay;
 
-    public RangedWeapon(Image icon, Image sprite, String name, int shotDelay,ProjectileType projectileType) {
+    public RangedWeapon(Image icon, Image sprite, String name, int shotDelay, ProjectileType projectileType) {
         super(icon, sprite, name);
         this.projectileType = projectileType;
         this.shotDelay = shotDelay;
@@ -27,20 +27,20 @@ public class RangedWeapon extends Weapon {
     }
 
     public void fire(int tX, int tY, Level level, Mob user) {
-        if(lastShot == 0)
+        if (lastShot == 0)
             lastShot = System.currentTimeMillis();
-        else{
+        else {
             long timeBetween = System.currentTimeMillis() - lastShot;
             System.out.println(timeBetween);
-            if(timeBetween < shotDelay){
+            if (timeBetween < shotDelay) {
                 return;
             }
         }
-        if(user instanceof MobPlayer){
+        if (user instanceof MobPlayer) {
             System.out.println(level.getPlayer().ammo.get(projectileType));
-            if(!level.getPlayer().ammo.containsKey(projectileType))return;
-            if(level.getPlayer().ammo.get(projectileType) <= 0)return; //TODO SOUND EFFECT?
-            level.getPlayer().ammo.put(projectileType,level.getPlayer().ammo.get(projectileType)-1);
+            if (!level.getPlayer().ammo.containsKey(projectileType)) return;
+            if (level.getPlayer().ammo.get(projectileType) <= 0) return; //TODO SOUND EFFECT?
+            level.getPlayer().ammo.put(projectileType, level.getPlayer().ammo.get(projectileType) - 1);
         }
         float xSpeed = ((tX) - user.getX());
         float ySpeed = ((tY) - user.getY());
@@ -48,8 +48,8 @@ public class RangedWeapon extends Weapon {
                 .sqrt(xSpeed * xSpeed + ySpeed * ySpeed));
         xSpeed = xSpeed * factor;
         ySpeed = ySpeed * factor;
-        if(getProjectileType() == ProjectileType.FIRE){
-            for(int i = 0;i!= 5;i++){
+        if (getProjectileType() == ProjectileType.FIRE) {
+            for (int i = 0; i != 5; i++) {
                 level.entities.add(new Projectile(xSpeed, ySpeed, user.getX(), user.getY(), projectileType));
             }
         }
@@ -98,23 +98,31 @@ class Projectile extends Entity {
         } else {
             level.entities.remove(this);
         }
-
         Rectangle me = new Rectangle(getX(), getY(), getWidth(), getHeight());
-        for (Entity e : level.entities) {
-            if (!(e instanceof MobHuman) && !(e instanceof MobBat)) continue;
+        if (type != ProjectileType.HUMAN_BULLET) {
 
-            Rectangle hRect = new Rectangle(e.getX(), e.getY(), e.getWidth(), e.getHeight());
-            if(me.intersects(hRect)){
-                Mob mob= (Mob) e;
-                mob.health-= type.getDamage();
+            for (Entity e : level.entities) {
+                if (!(e instanceof MobHuman) && !(e instanceof MobBat)) continue;
+
+                Rectangle hRect = new Rectangle(e.getX(), e.getY(), e.getWidth(), e.getHeight());
+                if (me.intersects(hRect)) {
+                    Mob mob = (Mob) e;
+                    mob.health -= type.getDamage();
+                    level.entities.remove(this);
+                }
+            }
+        } else {
+            Rectangle player = level.getPlayerHitbox();
+            if (me.intersects(player)) {
+                level.getPlayer().health -= type.getDamage();
                 level.entities.remove(this);
             }
         }
 
-        if(type == ProjectileType.FIRE){
-            float xa = (float) MobHuman.random.nextGaussian()*10;
+        if (type == ProjectileType.FIRE) {
+            float xa = (float) MobHuman.random.nextGaussian() * 10;
             addX((int) xa);
-            float ya = (float) MobHuman.random.nextGaussian()*10;
+            float ya = (float) MobHuman.random.nextGaussian() * 10;
             addY((int) ya);
         }
     }
@@ -125,7 +133,7 @@ class Projectile extends Entity {
 
     @Override
     public void render(Graphics graphics) {
-        if(type == ProjectileType.FIRE)
+        if (type == ProjectileType.FIRE)
             graphics.setColor(Color.red);
         super.render(graphics);
         graphics.setColor(Color.white);

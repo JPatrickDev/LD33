@@ -20,6 +20,7 @@ public class MobBat extends Mob {
     public MobBat(int x, int y) {
         super(x, y, 24, 24);
         this.health = 10f;
+        this.maxHealth = 10f;
         if(batSprite == null){
             batSprite = ImageUtil.loadImage("res/bat.png");
         }

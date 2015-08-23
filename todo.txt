@@ -61,12 +61,15 @@ Graphics
            - red eyes/
 
     - Better floor, wall tiles/
-    - finish the corners
     - Proper GUI
+       - InGame/
+            - Chest/
+            - HUD/
+            - Weapon info/
        - Polished and themed
     - Player facing different dirrections
         - Running animation?
-    - Weapon info page for ranged guns doesn't need to display condition and does not show damage
+    - Weapon info page for ranged guns doesn't need to display condition and does not show damage/
     - Any general graphical finishing touches(Window size?)
 
 Sound

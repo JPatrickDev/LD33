@@ -23,7 +23,7 @@ public class InGameState extends BasicGameState {
 
     Level level;
 
-    public static int totalHumanKills = 0,totalBatKills = 0;
+    public static int totalHumanKills = 0,totalBatKills = 0,numberOfRounds = 0;
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -39,6 +39,7 @@ public class InGameState extends BasicGameState {
         timeTaken = 60000;
         Level.humansKilled = 0;
         Level.batsKilled = 0;
+        numberOfRounds++;
 
     }
 
@@ -69,6 +70,11 @@ public class InGameState extends BasicGameState {
         mX = ii.getMouseX();
         mY = ii.getMouseY();
 
+        if(level.getPlayer().health <= 0){
+            level.roundOver();
+            GameOverState.causeOfEnd = false;
+            stateBasedGame.enterState(2);
+        }
         if (!GUI.isRenderingChestGUI && !GUI.renderingWeaponOverlay) {
             level.update(i);
             timeTaken-=i;
@@ -79,8 +85,14 @@ public class InGameState extends BasicGameState {
         }
 
         if(timeTaken<=0){
-            level.roundOver();
-           stateBasedGame.enterState(1);
+            if(InGameState.numberOfRounds == 5){
+                GameOverState.causeOfEnd = true;
+                stateBasedGame.enterState(2);
+            }else{
+                level.roundOver();
+                stateBasedGame.enterState(1);
+            }
+
         }
 
     }
