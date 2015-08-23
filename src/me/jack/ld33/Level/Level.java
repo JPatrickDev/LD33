@@ -6,6 +6,7 @@ import me.jack.ld33.Item.Item;
 import me.jack.ld33.Item.Melee.AxeWeapon;
 import me.jack.ld33.Item.Melee.DaggerWeapon;
 import me.jack.ld33.Item.Ranged.PistolWeapon;
+import me.jack.ld33.Item.Ranged.ProjectileType;
 import me.jack.ld33.Level.Tile.Tile;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Shape;
@@ -65,6 +66,9 @@ public class Level implements TileBasedMap {
         player.getWeapons().setSlot(0, new DaggerWeapon());
         player.getWeapons().setSlot(1, new AxeWeapon());
         player.getWeapons().setSlot(2, new PistolWeapon());
+        player.ammo.put(ProjectileType.SMALL_BULLET,20);
+
+
 
         for (int xx = 0; xx != width; xx++) {
             for (int yy = 0; yy != height; yy++) {

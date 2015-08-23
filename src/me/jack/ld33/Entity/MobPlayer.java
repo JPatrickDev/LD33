@@ -1,6 +1,7 @@
 package me.jack.ld33.Entity;
 
 import me.jack.ld33.Item.MeleeWeapon;
+import me.jack.ld33.Item.Ranged.ProjectileType;
 import me.jack.ld33.Item.RangedWeapon;
 import me.jack.ld33.Item.Weapon;
 import me.jack.ld33.Item.WeaponInventory;
@@ -17,6 +18,7 @@ import uk.co.jdpatrick.JEngine.Image.ImageUtil;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Jack on 22/08/2015.
@@ -29,6 +31,8 @@ public class MobPlayer extends Mob {
     public int selectedWeaponSlot = 0;
 
     public static Image playerSprite;
+
+    public HashMap<ProjectileType,Integer> ammo = new HashMap<ProjectileType, Integer>();
 
     public MobPlayer(int x, int y) {
         super(x, y, 32, 32);

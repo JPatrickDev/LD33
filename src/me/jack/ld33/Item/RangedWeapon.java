@@ -3,6 +3,7 @@ package me.jack.ld33.Item;
 import me.jack.ld33.Entity.Entity;
 import me.jack.ld33.Entity.Mob;
 import me.jack.ld33.Entity.MobHuman;
+import me.jack.ld33.Entity.MobPlayer;
 import me.jack.ld33.Item.Ranged.ProjectileType;
 import me.jack.ld33.Level.Level;
 import org.newdawn.slick.Image;
@@ -22,6 +23,12 @@ public class RangedWeapon extends Weapon {
     }
 
     public void fire(int tX, int tY, Level level, Mob user) {
+        if(user instanceof MobPlayer){
+            System.out.println(level.getPlayer().ammo.get(projectileType));
+            if(level.getPlayer().ammo.get(projectileType) <= 0)return; //TODO SOUND EFFECT?
+            level.getPlayer().ammo.put(projectileType,level.getPlayer().ammo.get(projectileType)-1);
+
+        }
         float xSpeed = ((tX) - user.getX());
         float ySpeed = ((tY) - user.getY());
         float factor = (float) (20 / Math
@@ -31,7 +38,9 @@ public class RangedWeapon extends Weapon {
         level.entities.add(new Projectile(xSpeed, ySpeed, user.getX(), user.getY(), projectileType));
     }
 
-
+    public ProjectileType getProjectileType() {
+        return projectileType;
+    }
 }
 
 class Projectile extends Entity {

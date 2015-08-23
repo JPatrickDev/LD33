@@ -1,9 +1,6 @@
 package me.jack.ld33.GUI;
 
-import me.jack.ld33.Item.Chest;
-import me.jack.ld33.Item.Item;
-import me.jack.ld33.Item.MeleeWeapon;
-import me.jack.ld33.Item.Weapon;
+import me.jack.ld33.Item.*;
 import me.jack.ld33.Level.Level;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -47,6 +44,9 @@ public class GUI {
                 graphics.setColor(Color.red);
                 graphics.fillRect(x, y + 16, pixelsToFill, 8);
                 graphics.setColor(Color.black);
+                if(weaponInSlot instanceof RangedWeapon){
+                    graphics.drawString(level.getPlayer().ammo.get(((RangedWeapon)weaponInSlot).getProjectileType()) + "",x,y+20);
+                }
                 if (level.getPlayer().selectedWeaponSlot == i) {
                     graphics.setColor(Color.red);
                     graphics.drawRect(x, y, 32, 32);
@@ -67,6 +67,9 @@ public class GUI {
                 graphics.setColor(Color.red);
                 graphics.fillRect(x, y + 16, pixelsToFill, 8);
                 graphics.setColor(Color.black);
+                if(weaponInSlot instanceof RangedWeapon){
+                    graphics.drawString("5",x,y+24);
+                }
                 if (level.getPlayer().selectedWeaponSlot == i) {
                     graphics.setColor(Color.red);
                     graphics.drawRect(x, y, 32, 32);
