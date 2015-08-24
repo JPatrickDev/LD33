@@ -32,6 +32,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/me/jack/ld33/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.34146342">
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="InGameState.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/me/jack/ld33/States/InGameState.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -46,11 +56,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainMenuState.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainMenuState.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/me/jack/ld33/States/MainMenuState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2195122">
-              <caret line="38" column="37" selection-start-line="38" selection-start-column="37" selection-end-line="38" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="41" column="41" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -97,16 +107,6 @@
                 <element signature="imports" expanded="true" />
                 <element signature="e#1491#1497#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Graphics.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/libs/slick.jar!/org/newdawn/slick/Graphics.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.592592">
-              <caret line="712" column="0" selection-start-line="712" selection-start-column="0" selection-end-line="712" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -189,7 +189,6 @@
         <option value="$PROJECT_DIR$/src/me/jack/ld33/Item/WeaponInventory.java" />
         <option value="$PROJECT_DIR$/src/me/jack/ld33/Level/Tile/Tile.java" />
         <option value="$PROJECT_DIR$/src/me/jack/ld33/Level/Tile/ChestTile.java" />
-        <option value="$PROJECT_DIR$/src/me/jack/ld33/Main.java" />
         <option value="$PROJECT_DIR$/src/me/jack/ld33/Item/Weapon.java" />
         <option value="$PROJECT_DIR$/src/me/jack/ld33/Item/Melee/AxeWeapon.java" />
         <option value="$PROJECT_DIR$/src/me/jack/ld33/Item/Chest.java" />
@@ -219,6 +218,7 @@
         <option value="$PROJECT_DIR$/src/me/jack/ld33/GUI/GUI.java" />
         <option value="$PROJECT_DIR$/src/me/jack/ld33/States/InGameState.java" />
         <option value="$PROJECT_DIR$/src/me/jack/ld33/States/MainMenuState.java" />
+        <option value="$PROJECT_DIR$/src/me/jack/ld33/Main.java" />
       </list>
     </option>
   </component>
@@ -832,7 +832,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1076,14 +1076,6 @@
             <element signature="e#38150#38151#0" expanded="true" />
             <element signature="e#38184#38185#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/me/jack/ld33/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1385,8 +1377,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/me/jack/ld33/States/MainMenuState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2195122">
-          <caret line="38" column="37" selection-start-line="38" selection-start-column="37" selection-end-line="38" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="41" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/me/jack/ld33/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34146342">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
