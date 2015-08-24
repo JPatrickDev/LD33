@@ -6,6 +6,7 @@ import me.jack.ld33.Item.Chest;
 import me.jack.ld33.Item.HealthBoost;
 import me.jack.ld33.Item.Melee.AxeWeapon;
 import me.jack.ld33.Item.Melee.DaggerWeapon;
+import me.jack.ld33.Item.Ranged.FlameThrowerWeapon;
 import me.jack.ld33.Item.Ranged.MachineGunWeapon;
 import me.jack.ld33.Item.Ranged.PistolWeapon;
 import me.jack.ld33.Item.Ranged.ProjectileType;
@@ -100,7 +101,9 @@ public class LevelGenerator {
                     if (MobHuman.random.nextInt(2) == 0) {
                         chest.addItem(new MachineGunWeapon());
                     }
-
+                    if(MobHuman.random.nextInt(4) == 0){
+                        chest.addItem(new FlameThrowerWeapon());
+                    }
                     if(MobHuman.random.nextInt((3)) == 0){
                         chest.addItem(new HealthBoost(MobHuman.random.nextInt(5)+5));
                     }
