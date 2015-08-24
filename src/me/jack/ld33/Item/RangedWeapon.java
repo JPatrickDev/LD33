@@ -31,7 +31,6 @@ public class RangedWeapon extends Weapon {
             lastShot = System.currentTimeMillis();
         else {
             long timeBetween = System.currentTimeMillis() - lastShot;
-            System.out.println(timeBetween);
             if (timeBetween < shotDelay) {
                 return;
             }

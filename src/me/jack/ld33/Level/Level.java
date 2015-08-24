@@ -45,7 +45,7 @@ public class Level implements TileBasedMap {
 
     public Camera camera = new Camera(1000, 1000, 64, 800, 600);
 
-    static MobPlayer player;
+    public static MobPlayer player;
 
 
     public Level(int width, int height, int[][] tiles, int[][] topLayer) {

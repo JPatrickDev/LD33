@@ -226,7 +226,6 @@ public class LevelGenerator {
         else wallCount++;
 
         if (wallCount == 7 && floorCount == 1) {
-            System.out.println("Found corner");
             return true;
         }
         return false;

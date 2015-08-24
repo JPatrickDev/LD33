@@ -113,6 +113,8 @@ public class GUI {
                 if (level.getPlayer().selectedWeaponSlot == i) {
                     graphics.setColor(Color.red);
                     graphics.drawRect(x, y, 32, 32);
+                    graphics.drawRect(x+1, y+1, 28, 28);
+                    graphics.drawRect(x+2, y+2, 24, 24);
                     graphics.setColor(Color.black);
                 }
             }
@@ -170,7 +172,6 @@ public class GUI {
     public static boolean mouseClick(int button, int xx, int yy, Level level) {
         if (renderingWeaponOverlay) {
             if (xx > x && xx < x + width && yy > y && yy < y + height) {
-                System.out.println("Clicking inisde GUI");
                 if (closeButton.contains(xx, yy)) {
                     renderingWeaponOverlay = false;
                     currentOverlay = null;
@@ -226,7 +227,6 @@ public class GUI {
             return true;
         }
         if (xx > 272 && yy > 150 && xx < 272 + 256 && yy < 150 + 192 && isRenderingChestGUI) {
-            System.out.println("Clicked inside chest");
             int relX = (xx - 272) / 64;
             int relY = (yy - 150) / 64;
             Item selected = currentChest.getItem(relX + relY * 4);
@@ -235,7 +235,7 @@ public class GUI {
                     Weapon weapon = (Weapon) selected;
                     int i = level.getPlayer().canPickupWeapon(weapon);
                     if (i != -1) {
-                        level.getPlayer().getWeapons().setSlot(i, weapon);//TODO SOUND EFFECT IF CAN'T FIT
+                        level.getPlayer().getWeapons().setSlot(i, weapon);
                         currentChest.removeItem(selected);
                     }
                 } else if (selected instanceof Ammo) {
@@ -253,7 +253,6 @@ public class GUI {
         }
         //272, 150 + 3 * 64, 256, 50
         if (xx > 272 && yy > 150 + 3 * 64 && xx < 272 + 256 && yy < 150 + 3 * 64 + 32)
-
         {
             currentChest = null;
             isRenderingChestGUI = false;

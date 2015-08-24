@@ -31,7 +31,7 @@ public class MobPlayer extends Mob {
     public HashMap<ProjectileType, Integer> ammo = new HashMap<ProjectileType, Integer>();
 
     private int facing = 0;//NORTH = 0,EAST = 1,SOUTH = 2,EAST = 3
-    private Image[] facingImages = new Image[4];
+    private static Image[] facingImages = new Image[4];
     public MobPlayer(int x, int y) {
         super(x, y, 32, 32);
         if (playerSprites == null) {

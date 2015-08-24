@@ -8,6 +8,6 @@ import org.newdawn.slick.Image;
  */
 public class PistolWeapon extends RangedWeapon {
     public PistolWeapon() {
-        super(weaponIcons.getSprite(0, 1), weaponSprites.getSprite(0, 1), "Pistol", 500, ProjectileType.SMALL_BULLET);
+        super(weaponIcons.getSprite(0, 1), weaponSprites.getSprite(0, 1), "Pistol", 200, ProjectileType.SMALL_BULLET);
     }
 }
