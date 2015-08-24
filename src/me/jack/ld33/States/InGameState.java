@@ -78,9 +78,6 @@ public class InGameState extends BasicGameState {
         if (!GUI.isRenderingChestGUI && !GUI.renderingWeaponOverlay) {
             level.update(i);
             timeTaken-=i;
-            if (level.getPlayer() != null) {
-                level.getPlayer().angle = (float) -(Math.atan2(level.getPlayer().getX() - (gameContainer.getInput().getMouseX() + level.camera.x), level.getPlayer().getY() - (gameContainer.getInput().getMouseY() + level.camera.y)) * 180 / Math.PI);
-            }
             time += i;
         }
 

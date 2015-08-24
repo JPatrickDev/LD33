@@ -123,7 +123,7 @@ public class GUI {
     }
 
 
-    public static boolean renderingWeaponOverlay = true;
+    public static boolean renderingWeaponOverlay = false;
     public static Weapon currentOverlay = null;
     static int width = 180;
     static int height = 265;
